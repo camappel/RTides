@@ -19,5 +19,3 @@ library(Rtides)
 # Predict
 # preds <- tide_at(fit, new_times_posixct)
 ```
-
-Note: Update DESCRIPTION with your maintainer email/name before submitting to CRAN.
