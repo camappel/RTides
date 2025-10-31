@@ -1,15 +1,13 @@
-Package: Rtides
+Package: RTides
 Type: Package
-Title: Harmonic Tidal Analysis and Prediction (Port of Pytides)
+Title: Harmonic tidal analysis and prediction
 Version: 0.1.0
-Authors@R: c(
-    person(given = "Cam", family = "", role = c("aut", "cre"), email = "your.email@example.com"),
-    person(given = "Sam", family = "Cox", role = "aut", comment = "Original Pytides (Python) author")
-)
-Description: Harmonic tidal analysis and prediction using astronomical arguments and nodal corrections per Schureman, ported from the Python 'Pytides' project.
+Authors@R: person("Cam", "Appel", role = c("aut", "cre"), email = "cam@appel.co.uk")
+Description: Harmonic tidal analysis and prediction using astronomical
+    arguments and nodal corrections per Schureman, ported from the Python
+    'Pytides' project.
 License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: true
 Depends: R (>= 3.6)
 Imports: stats
 URL: https://github.com/camappel/RTides
