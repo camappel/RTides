@@ -1,15 +1,14 @@
 ---
-title: "Portsmouth Tides — Basic Overview"
+title: "Harmonic Analysis of Tides"
 format: gfm
 ---
-
 
 ## Data
 ### [British Oceanographic Data Centre](https://www.bodc.ac.uk/data/hosted_data_systems/sea_level/uk_tide_gauge_network/) - UK Tide Gauge Network
 | Field             | Value                                                             |
 | ----------------- | ----------------------------------------------------------------- |
 | Station name      | Portsmouth                                                        |
-| Country           | UK                                                                |
+| Location          | UK                                                                |
 | Latitude          | 50° 48' N                                                   |
 | Longitude         | 01° 06' W                                                   |
 | Datum reference   | ACD = ODN − 2.73 m |
@@ -25,8 +24,8 @@ _Variables_
 ### [NOAA](https://tidesandcurrents.noaa.gov/) Tides & Currents
 | Field           | Value                                             |
 | --------------- | ------------------------------------------------- |
-| Station name    | Southbank Riverwalk, St Johns River, FL (8720226) |
-| Country         | USA                                               |
+| Station name    | Southbank Riverwalk, St Johns River (8720226)     |
+| Location        | Jacksonville, FL, USA                             |
 | Latitude        | 30° 19.2' N                                       |
 | Longitude       | 81° 39.5' W                                       |
 | Datum reference | [MLLW = MSL - 1.06 m]((https://tidesandcurrents.noaa.gov/datums.html?id=8720226))                               |
@@ -49,10 +48,31 @@ To make the two records directly comparable, both time series should be transfor
 
 ## Load data
 
+The raw data files for Portsmouth and Jacksonville are stored in `data/`.
+
 ```{r}
 # Read CSV (expected columns: date, time, elevation)
-csv_path <- "data/Portsmouth.csv"
+portsmouth_raw <- read.csv("data/Portsmouth.csv", stringsAsFactors = FALSE)
+fl_raw <- read.csv("data/Florida.csv", stringsAsFactors = FALSE)
 
-tidal_raw <- read.csv(csv_path, stringsAsFactors = FALSE)
-head(tidal_raw)
+# Build POSIXct timestamps (minute resolution) and convert elevation to MSL
+portsmouth_time <- as.POSIXct(
+  paste(portsmouth_raw$date, portsmouth_raw$time),
+  format = "%Y-%m-%d %H:%M",
+  tz = "UTC"
+)
+portsmouth_elev_msl <- as.numeric(portsmouth_raw$elevation) - 2.73
+portsmouth_msl <- data.frame(time = portsmouth_time, elevation = portsmouth_elev_msl)
+
+fl_time <- as.POSIXct(
+  paste(fl_raw$date, fl_raw$time),
+  format = "%Y-%m-%d %H:%M",
+  tz = "UTC"
+)
+fl_elev_msl <- as.numeric(fl_raw$elevation) - 1.06
+fl_msl <- data.frame(time = fl_time, elevation = fl_elev_msl)
+
+# plot
+plot(portsmouth_msl$time, portsmouth_msl$elevation, type = "l", xlab = "Time", ylab = "Elevation (m)", main = "Portsmouth Tides")
+plot(fl_msl$time, fl_msl$elevation, type = "l", xlab = "Time", ylab = "Elevation (m)", main = "Jacksonville Tides")
 ```

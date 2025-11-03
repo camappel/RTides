@@ -1,4 +1,4 @@
-# Portsmouth Tides — Basic Overview
+# Harmonic Analysis of Tides
 
 
 ## Data
@@ -8,7 +8,7 @@
 | Field           | Value              |
 |-----------------|--------------------|
 | Station name    | Portsmouth         |
-| Country         | UK                 |
+| Location        | UK                 |
 | Latitude        | 50° 48’ N          |
 | Longitude       | 01° 06’ W          |
 | Datum reference | ACD = ODN − 2.73 m |
@@ -26,8 +26,8 @@
 
 | Field | Value |
 |----|----|
-| Station name | Southbank Riverwalk, St Johns River, FL (8720226) |
-| Country | USA |
+| Station name | Southbank Riverwalk, St Johns River (8720226) |
+| Location | Jacksonville, FL, USA |
 | Latitude | 30° 19.2’ N |
 | Longitude | 81° 39.5’ W |
 | Datum reference | [MLLW = MSL - 1.06 m]((https://tidesandcurrents.noaa.gov/datums.html?id=8720226)) |
@@ -56,18 +56,44 @@ transformed to a common vertical datum, typically Mean Sea Level (MSL).
 
 ## Load data
 
+The raw data files for Portsmouth and Jacksonville are stored in
+`data/`.
+
 ``` r
 # Read CSV (expected columns: date, time, elevation)
-csv_path <- "data/Portsmouth.csv"
+portsmouth_raw <- read.csv("data/Portsmouth.csv", stringsAsFactors = FALSE)
+fl_raw <- read.csv("data/Florida.csv", stringsAsFactors = FALSE)
 
-tidal_raw <- read.csv(csv_path, stringsAsFactors = FALSE)
-head(tidal_raw)
+# Build POSIXct timestamps (minute resolution) and convert elevation to MSL
+portsmouth_time <- as.POSIXct(
+  paste(portsmouth_raw$date, portsmouth_raw$time),
+  format = "%Y-%m-%d %H:%M",
+  tz = "UTC"
+)
+portsmouth_elev_msl <- as.numeric(portsmouth_raw$elevation) - 2.73
 ```
 
-            date time elevation
-    1 2023-01-01 0:00     2.288
-    2 2023-01-01 0:15     2.274
-    3 2023-01-01 0:30     2.247
-    4 2023-01-01 0:45     2.243
-    5 2023-01-01 1:00     2.279
-    6 2023-01-01 1:15     2.344
+    Warning: NAs introduced by coercion
+
+``` r
+portsmouth_msl <- data.frame(time = portsmouth_time, elevation = portsmouth_elev_msl)
+
+fl_time <- as.POSIXct(
+  paste(fl_raw$date, fl_raw$time),
+  format = "%Y-%m-%d %H:%M",
+  tz = "UTC"
+)
+fl_elev_msl <- as.numeric(fl_raw$elevation) - 1.06
+fl_msl <- data.frame(time = fl_time, elevation = fl_elev_msl)
+
+# plot
+plot(portsmouth_msl$time, portsmouth_msl$elevation, type = "l", xlab = "Time", ylab = "Elevation (m)", main = "Portsmouth Tides")
+```
+
+![](README_files/figure-commonmark/unnamed-chunk-1-1.png)
+
+``` r
+plot(fl_msl$time, fl_msl$elevation, type = "l", xlab = "Time", ylab = "Elevation (m)", main = "Jacksonville Tides")
+```
+
+![](README_files/figure-commonmark/unnamed-chunk-1-2.png)
