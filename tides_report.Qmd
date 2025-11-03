@@ -1,16 +1,37 @@
 ---
 title: "Portsmouth Tides — Basic Overview"
-format: 
-  html:
-    theme: readable
-    toc: true
-    toc-expand: true
-    df-print: paged
+format: gfm
 ---
 
-## Introduction
 
-This brief report reads `data/Portsmouth.csv`, visualises the tide elevation over time, and provides basic daily summaries (min, max, mean, and daily range).
+## Data
+### [British Oceanographic Data Centre](https://www.bodc.ac.uk/data/hosted_data_systems/sea_level/uk_tide_gauge_network/) - UK Tide Gauge Network
+| Field             | Value                                                             |
+| ----------------- | ----------------------------------------------------------------- |
+| Station name      | Portsmouth                                                        |
+| Country           | UK                                                                |
+| Latitude          | 50° 48' N                                                   |
+| Longitude         | 01° 06' W                                                   |
+| Datum reference   | ACD = ODN − 2.73 m
+| Time reference    | GMT                                                |
+
+
+### [NOAA](https://tidesandcurrents.noaa.gov/) Tides & Currents
+| Field           | Value                                             |
+| --------------- | ------------------------------------------------- |
+| Station name    | Southbank Riverwalk, St Johns River, FL (8720226) |
+| Country         | USA                                               |
+| Latitude        | 30° 19.2' N                                       |
+| Longitude       | 81° 39.5' W                                       |
+| Datum reference | [MLLW = MSL - 1.06 m]((https://tidesandcurrents.noaa.gov/datums.html?id=8720226))                               |
+| Time reference  | EST                                               |
+
+A tidal datum is a fixed vertical reference used to measure water levels. Different regions use different zero-points, so the same numeric tide height can represent different true sea levels unless a common baseline is used.
+
+* The Portsmouth dataset uses Admiralty Chart Datum (ACD), which is approximately the Lowest Astronomical Tide and is 2.73 m below the UK national height reference ODN (≈ mean sea level).
+* The NOAA station uses Mean Lower-Low Water (MLLW) as its zero, with Mean Sea Level (MSL) at this location being 1.06 m above MLLW.
+
+To make the two records directly comparable, both time series should be transformed to a common vertical datum, typically Mean Sea Level (MSL).
 
 ## Load data
 
@@ -19,34 +40,5 @@ This brief report reads `data/Portsmouth.csv`, visualises the tide elevation ove
 csv_path <- "data/Portsmouth.csv"
 
 tidal_raw <- read.csv(csv_path, stringsAsFactors = FALSE)
+head(tidal_raw)
 ```
-
-```{r}
-stopifnot(file.exists(csv_path))
-
-tidal_raw <- read.csv(csv_path, stringsAsFactors = FALSE)
-
-# Normalize column names
-names(tidal_raw) <- tolower(names(tidal_raw))
-required_cols <- c("date", "time", "elevation")
-missing_cols <- setdiff(required_cols, names(tidal_raw))
-if (length(missing_cols) > 0) {
-  stop(sprintf("Missing required column(s): %s", paste(missing_cols, collapse = ", ")))
-}
-
-tidal_raw$elevation <- as.numeric(tidal_raw$elevation)
-
-# Build POSIXct datetime in UTC (from date YYYY-MM-DD and time H:MM)
-tidal_raw$datetime <- as.POSIXct(
-  paste(tidal_raw$date, tidal_raw$time),
-  format = "%Y-%m-%d %H:%M",
-  tz = "UTC"
-)
-
-# Day index for daily summaries
-tidal_raw$day <- as.Date(tidal_raw$datetime, tz = "UTC")
-
-# Drop rows with missing key fields
-tidal <- subset(tidal_raw, is.finite(elevation) & !is.na(datetime))
-```
-

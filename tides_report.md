@@ -1,0 +1,58 @@
+# Portsmouth Tides — Basic Overview
+
+
+## Data
+
+### [British Oceanographic Data Centre](https://www.bodc.ac.uk/data/hosted_data_systems/sea_level/uk_tide_gauge_network/) - UK Tide Gauge Network
+
+| Field           | Value              |
+|-----------------|--------------------|
+| Station name    | Portsmouth         |
+| Country         | UK                 |
+| Latitude        | 50° 48’ N          |
+| Longitude       | 01° 06’ W          |
+| Datum reference | ACD = ODN − 2.73 m |
+| Time reference  | GMT                |
+
+### [NOAA](https://tidesandcurrents.noaa.gov/) Tides & Currents
+
+| Field | Value |
+|----|----|
+| Station name | Southbank Riverwalk, St Johns River, FL (8720226) |
+| Country | USA |
+| Latitude | 30° 19.2’ N |
+| Longitude | 81° 39.5’ W |
+| Datum reference | [MLLW = MSL - 1.06 m]((https://tidesandcurrents.noaa.gov/datums.html?id=8720226)) |
+| Time reference | EST |
+
+A tidal datum is a fixed vertical reference used to measure water
+levels. Different regions use different zero-points, so the same numeric
+tide height can represent different true sea levels unless a common
+baseline is used.
+
+- The Portsmouth dataset uses Admiralty Chart Datum (ACD), which is
+  approximately the Lowest Astronomical Tide and is 2.73 m below the UK
+  national height reference ODN (≈ mean sea level).
+- The NOAA station uses Mean Lower-Low Water (MLLW) as its zero, with
+  Mean Sea Level (MSL) at this location being 1.06 m above MLLW.
+
+To make the two records directly comparable, both time series should be
+transformed to a common vertical datum, typically Mean Sea Level (MSL).
+
+## Load data
+
+``` r
+# Read CSV (expected columns: date, time, elevation)
+csv_path <- "data/Portsmouth.csv"
+
+tidal_raw <- read.csv(csv_path, stringsAsFactors = FALSE)
+head(tidal_raw)
+```
+
+            date time elevation
+    1 2023-01-01 0:00     2.288
+    2 2023-01-01 0:15     2.274
+    3 2023-01-01 0:30     2.247
+    4 2023-01-01 0:45     2.243
+    5 2023-01-01 1:00     2.279
+    6 2023-01-01 1:15     2.344
