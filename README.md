@@ -1,6 +1,18 @@
 # Harmonic Analysis of Tides
 
 
+``` r
+library(magrittr)
+library(lubridate)
+```
+
+
+    Attaching package: 'lubridate'
+
+    The following objects are masked from 'package:base':
+
+        date, intersect, setdiff, union
+
 ## Data
 
 ### [British Oceanographic Data Centre](https://www.bodc.ac.uk/data/hosted_data_systems/sea_level/uk_tide_gauge_network/) - UK Tide Gauge Network
@@ -86,14 +98,14 @@ fl_time <- as.POSIXct(
 fl_elev_msl <- as.numeric(fl_raw$elevation) - 1.06
 fl_msl <- data.frame(time = fl_time, elevation = fl_elev_msl)
 
-# plot
-plot(portsmouth_msl$time, portsmouth_msl$elevation, type = "l", xlab = "Time", ylab = "Elevation (m)", main = "Portsmouth Tides")
+# plot 2023 data only
+plot(portsmouth_msl$time[year(portsmouth_msl$time) == 2023], portsmouth_msl$elevation[year(portsmouth_msl$time) == 2023], type = "l", xlab = "Time", ylab = "Elevation (m)", main = "Portsmouth Tides")
 ```
 
-![](README_files/figure-commonmark/unnamed-chunk-1-1.png)
+![](README_files/figure-commonmark/unnamed-chunk-2-1.png)
 
 ``` r
 plot(fl_msl$time, fl_msl$elevation, type = "l", xlab = "Time", ylab = "Elevation (m)", main = "Jacksonville Tides")
 ```
 
-![](README_files/figure-commonmark/unnamed-chunk-1-2.png)
+![](README_files/figure-commonmark/unnamed-chunk-2-2.png)
