@@ -53,10 +53,13 @@ library(lubridate)
 - Verified (observed) tide
 
 <img width="602" height="453" alt="Screenshot 2025-11-03 at 23 27 34" src="https://github.com/user-attachments/assets/15044e81-a9f4-4408-8349-984a9722b3bd" />
-- National Tidal Datum Epoch = The specific 19-year period adopted by the National Ocean Service as the official time segment over which tide observations are taken and reduced to obtain mean values (e.g., mean lower low water, etc.) for tidal datums. It is necessary for standardization because of periodic and apparent secular trends in sea level. The present NTDE is 1983 through 2001 and is actively considered for revision every 20-25 years.
+
+The NOAA station uses Mean Lower-Low Water (MLLW) as its zero:
+
 - Mean Lower Low Water (MSSL) = "The average of the lower low water height of each tidal day observed over the National Tidal Datum Epoch"
 - Mean Sea Level (MSL) = "The arithmetic mean of hourly heights observed over the National Tidal Datum Epoch."
-- MSL at Southbank Riverwalk location is 1.06 m above MLLW.
+  - MLLW = MSL - 1.06 m @ Southbank Riverwalk
+- National Tidal Datum Epoch = "The specific 19-year period adopted by the National Ocean Service as the official time segment over which tide observations are taken and reduced to obtain mean values (e.g., mean lower low water, etc.) for tidal datums. It is necessary for standardization because of periodic and apparent secular trends in sea level. The present NTDE is 1983 through 2001 and is actively considered for revision every 20-25 years."
 
 A tidal datum is a fixed vertical reference used to measure water
 levels. Different regions use different zero-points, so the same numeric
@@ -66,8 +69,7 @@ baseline is used.
 - The Portsmouth dataset uses Admiralty Chart Datum (ACD), which is
   approximately the Lowest Astronomical Tide and is 2.73 m below the UK
   national height reference ODN (≈ mean sea level).
-- The NOAA station uses Mean Lower-Low Water (MLLW) as its zero:
-  - 
+- 
 
 To make the two records directly comparable, both time series should be
 transformed to a common vertical datum, typically Mean Sea Level (MSL).
