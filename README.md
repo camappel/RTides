@@ -13,6 +13,14 @@
 | Longitude       | 01° 06’ W          |
 | Datum reference | ACD = ODN − 2.73 m |
 | Time reference  | GMT                |
+| Resolution      | 15-minutes         |
+| Units           | Metric (m)         |
+
+*Variables*
+
+- ASLVBG02 (Observed surface elevation from bubbler gauge relative to
+  ACD)
+- Residual = Observed − Predicted (provided directly)
 
 ### [NOAA](https://tidesandcurrents.noaa.gov/) Tides & Currents
 
@@ -24,6 +32,13 @@
 | Longitude | 81° 39.5’ W |
 | Datum reference | [MLLW = MSL - 1.06 m]((https://tidesandcurrents.noaa.gov/datums.html?id=8720226)) |
 | Time reference | EST |
+| Resolution | 6-minutes |
+| Units | “Standard” (f) or Metric (m) |
+
+*Variables*
+
+- Predicted tide
+- Verified (observed) tide
 
 A tidal datum is a fixed vertical reference used to measure water
 levels. Different regions use different zero-points, so the same numeric
