@@ -1,0 +1,52 @@
+---
+title: "Portsmouth Tides — Basic Overview"
+format: 
+  html:
+    theme: readable
+    toc: true
+    toc-expand: true
+    df-print: paged
+---
+
+## Introduction
+
+This brief report reads `data/Portsmouth.csv`, visualises the tide elevation over time, and provides basic daily summaries (min, max, mean, and daily range).
+
+## Load data
+
+```{r}
+# Read CSV (expected columns: date, time, elevation)
+csv_path <- "data/Portsmouth.csv"
+
+tidal_raw <- read.csv(csv_path, stringsAsFactors = FALSE)
+```
+
+```{r}
+stopifnot(file.exists(csv_path))
+
+tidal_raw <- read.csv(csv_path, stringsAsFactors = FALSE)
+
+# Normalize column names
+names(tidal_raw) <- tolower(names(tidal_raw))
+required_cols <- c("date", "time", "elevation")
+missing_cols <- setdiff(required_cols, names(tidal_raw))
+if (length(missing_cols) > 0) {
+  stop(sprintf("Missing required column(s): %s", paste(missing_cols, collapse = ", ")))
+}
+
+tidal_raw$elevation <- as.numeric(tidal_raw$elevation)
+
+# Build POSIXct datetime in UTC (from date YYYY-MM-DD and time H:MM)
+tidal_raw$datetime <- as.POSIXct(
+  paste(tidal_raw$date, tidal_raw$time),
+  format = "%Y-%m-%d %H:%M",
+  tz = "UTC"
+)
+
+# Day index for daily summaries
+tidal_raw$day <- as.Date(tidal_raw$datetime, tz = "UTC")
+
+# Drop rows with missing key fields
+tidal <- subset(tidal_raw, is.finite(elevation) & !is.na(datetime))
+```
+
