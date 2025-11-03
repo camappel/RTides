@@ -1,0 +1,148 @@
+---
+title: "Portsmouth Tides — Basic Overview"
+output:
+  html_document:
+    theme: readable
+    toc: true
+    toc_float: true
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+### Introduction
+
+This brief report reads `../data/Portsmouth.csv`, visualises the tide elevation over time, and provides basic daily summaries (min, max, mean, and daily range).
+
+### Load data
+
+```{r}
+# Read CSV (expected columns: date, time, elevation)
+csv_path <- "../data/Portsmouth.csv"
+stopifnot(file.exists(csv_path))
+
+tidal_raw <- read.csv(csv_path, stringsAsFactors = FALSE)
+
+# Coerce expected columns
+names(tidal_raw) <- tolower(names(tidal_raw))
+required_cols <- c("date", "time", "elevation")
+missing_cols <- setdiff(required_cols, names(tidal_raw))
+if (length(missing_cols) > 0) {
+  stop(sprintf("Missing required column(s): %s", paste(missing_cols, collapse = ", ")))
+}
+
+tidal_raw$elevation <- as.numeric(tidal_raw$elevation)
+
+# Build POSIXct datetime in UTC (from date YYYY-MM-DD and time H:MM)
+tidal_raw$datetime <- as.POSIXct(
+  paste(tidal_raw$date, tidal_raw$time),
+  format = "%Y-%m-%d %H:%M",
+  tz = "UTC"
+)
+
+# Day index for daily summaries
+tidal_raw$day <- as.Date(tidal_raw$datetime, tz = "UTC")
+
+# Drop rows with missing key fields
+tidal <- subset(tidal_raw, is.finite(elevation) & !is.na(datetime))
+```
+
+### Basic overview
+
+```{r}
+num_points <- nrow(tidal)
+num_days <- length(unique(tidal$day))
+time_range <- range(tidal$datetime)
+elev_summary <- summary(tidal$elevation)
+
+list(
+  observations = num_points,
+  unique_days = num_days,
+  time_start_utc = format(time_range[1], "%Y-%m-%d %H:%M UTC"),
+  time_end_utc = format(time_range[2], "%Y-%m-%d %H:%M UTC"),
+  elevation_summary = elev_summary
+)
+```
+
+### Tide elevation over time
+
+```{r}
+par(mar = c(4, 4, 1, 1))
+plot(
+  tidal$datetime,
+  tidal$elevation,
+  type = "l",
+  col = "#2C7BB6",
+  xlab = "Time (UTC)",
+  ylab = "Elevation (m)",
+  main = "Tide Elevation — Full Period"
+)
+grid(col = "#dddddd")
+```
+
+### First week (zoomed)
+
+```{r}
+first_day <- min(tidal$day)
+week_end <- first_day + 6
+tidal_week <- subset(tidal, day >= first_day & day <= week_end)
+
+par(mar = c(4, 4, 1, 1))
+plot(
+  tidal_week$datetime,
+  tidal_week$elevation,
+  type = "l",
+  col = "#1D91C0",
+  xlab = "Time (UTC)",
+  ylab = "Elevation (m)",
+  main = sprintf("Tide Elevation — %s to %s", first_day, week_end)
+)
+grid(col = "#dddddd")
+```
+
+### Daily summaries
+
+```{r}
+daily_min <- tapply(tidal$elevation, tidal$day, min)
+daily_max <- tapply(tidal$elevation, tidal$day, max)
+daily_mean <- tapply(tidal$elevation, tidal$day, mean)
+daily_range <- daily_max - daily_min
+
+daily_summary <- data.frame(
+  day = as.Date(names(daily_min)),
+  min = as.numeric(daily_min),
+  max = as.numeric(daily_max),
+  mean = as.numeric(daily_mean),
+  range = as.numeric(daily_range)
+)
+
+# Show first few days
+head(daily_summary, 10)
+```
+
+#### Daily range over time
+
+```{r}
+par(mar = c(4, 4, 1, 1))
+plot(
+  daily_summary$day,
+  daily_summary$range,
+  type = "l",
+  col = "#009E73",
+  xlab = "Day (UTC)",
+  ylab = "Daily Range (m)",
+  main = "Daily Tidal Range"
+)
+grid(col = "#dddddd")
+```
+
+### Key points
+
+- **Lowest elevation**: `r sprintf("%.3f m", min(tidal$elevation))`  
+- **Highest elevation**: `r sprintf("%.3f m", max(tidal$elevation))`  
+- **Median daily range**: `r sprintf("%.3f m", median(daily_summary$range, na.rm = TRUE))`  
+- **Mean daily range**: `r sprintf("%.3f m", mean(daily_summary$range, na.rm = TRUE))`
+
+
