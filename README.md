@@ -29,11 +29,11 @@ and daily range).
 
 ### Tide elevation over time
 
-![](/Users/cam/Projects/FLOOD-CDT/RTides/README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+![](./README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
 ### First week (zoomed)
 
-![](/Users/cam/Projects/FLOOD-CDT/RTides/README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](./README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
 ### Daily summaries
 
@@ -51,7 +51,7 @@ and daily range).
 
 #### Daily range over time
 
-![](/Users/cam/Projects/FLOOD-CDT/RTides/README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+![](./README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 ### Key points
 

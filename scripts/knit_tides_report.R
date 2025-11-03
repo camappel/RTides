@@ -14,7 +14,7 @@ rmarkdown::render(
   input = input_file,
   output_file = "README.md",
   output_dir = ".",
-  output_format = "github_document",
+  output_format = rmarkdown::github_document(html_preview = FALSE),
   quiet = TRUE
 )
 
