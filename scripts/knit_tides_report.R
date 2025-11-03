@@ -1,4 +1,4 @@
-# Knit the Portsmouth tides report to HTML
+# Knit the Portsmouth tides report to Markdown (README.md)
 
 if (!requireNamespace("rmarkdown", quietly = TRUE)) {
   install.packages("rmarkdown", repos = "https://cloud.r-project.org")
@@ -12,12 +12,13 @@ if (!file.exists(input_file)) {
 message("Rendering ", input_file, " …")
 rmarkdown::render(
   input = input_file,
-  output_file = "tides_report.html",
-  output_dir = "scripts",
+  output_file = "README.md",
+  output_dir = ".",
+  output_format = "github_document",
   quiet = TRUE
 )
 
-output_path <- file.path("scripts", "tides_report.html")
+output_path <- file.path(".", "README.md")
 message("Done. Output: ", normalizePath(output_path, winslash = "/", mustWork = FALSE))
 
 
