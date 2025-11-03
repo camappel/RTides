@@ -62,8 +62,9 @@ baseline is used.
 - The Portsmouth dataset uses Admiralty Chart Datum (ACD), which is
   approximately the Lowest Astronomical Tide and is 2.73 m below the UK
   national height reference ODN (≈ mean sea level).
-- The NOAA station uses Mean Lower-Low Water (MLLW) as its zero, with
-  Mean Sea Level (MSL) at this location being 1.06 m above MLLW.
+- The NOAA station uses Mean Lower-Low Water (MLLW) as its zero:
+  - "The average of the lower low water height of each tidal day observed over the National Tidal Datum Epoch"
+  - Mean Sea Level (MSL) at this location is 1.06 m above MLLW.
 
 To make the two records directly comparable, both time series should be
 transformed to a common vertical datum, typically Mean Sea Level (MSL).
