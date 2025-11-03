@@ -1,8 +1,0 @@
-export(astro)
-export(tide_model)
-export(tide_at)
-export(tide_decompose)
-export(tide_form_number)
-export(tide_classify)
-export(noaa)
-importFrom(stats, optim)
