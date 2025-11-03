@@ -109,3 +109,38 @@ plot(fl_msl$time, fl_msl$elevation, type = "l", xlab = "Time", ylab = "Elevation
 ```
 
 ![](README_files/figure-commonmark/unnamed-chunk-2-2.png)
+
+``` r
+library(httr)
+
+base <- "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter"
+params <- list(
+  begin_date = "20230101",
+  end_date   = "20231231",
+  station    = "8720226",
+  product    = "hourly_height",   # use 'water_level' for 6-min; then do month by month
+  datum      = "MLLW",
+  time_zone  = "gmt",
+  units      = "metric",
+  format     = "csv",
+  application= "RTides"
+)
+
+resp <- GET(base, query = params)
+# JSON -> R list
+data <- content(resp, "text", encoding = "UTF-8")
+data <- read.csv(text = data, stringsAsFactors = FALSE)
+print(head(data))
+```
+
+             Date.Time Water.Level Sigma I L
+    1 2023-01-01 00:00       0.569 0.004 0 0
+    2 2023-01-01 01:00       0.411 0.005 0 0
+    3 2023-01-01 02:00       0.244 0.004 0 0
+    4 2023-01-01 03:00       0.118 0.003 0 0
+    5 2023-01-01 04:00       0.059 0.002 0 0
+    6 2023-01-01 05:00       0.054 0.003 0 0
+
+``` r
+library(ggplot2)
+```

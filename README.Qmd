@@ -80,3 +80,31 @@ fl_msl <- data.frame(time = fl_time, elevation = fl_elev_msl)
 plot(portsmouth_msl$time[year(portsmouth_msl$time) == 2023], portsmouth_msl$elevation[year(portsmouth_msl$time) == 2023], type = "l", xlab = "Time", ylab = "Elevation (m)", main = "Portsmouth Tides")
 plot(fl_msl$time, fl_msl$elevation, type = "l", xlab = "Time", ylab = "Elevation (m)", main = "Jacksonville Tides")
 ```
+
+
+```{r}
+library(httr)
+
+base <- "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter"
+params <- list(
+  begin_date = "20230101",
+  end_date   = "20231231",
+  station    = "8720226",
+  product    = "hourly_height",   # use 'water_level' for 6-min; then do month by month
+  datum      = "MLLW",
+  time_zone  = "gmt",
+  units      = "metric",
+  format     = "csv",
+  application= "RTides"
+)
+
+resp <- GET(base, query = params)
+# JSON -> R list
+data <- content(resp, "text", encoding = "UTF-8")
+data <- read.csv(text = data, stringsAsFactors = FALSE)
+print(head(data))
+```
+
+```{r}
+library(ggplot2)
+```
