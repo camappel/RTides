@@ -52,6 +52,8 @@ library(lubridate)
 - Predicted tide
 - Verified (observed) tide
 
+<img width="602" height="453" alt="Screenshot 2025-11-03 at 23 27 34" src="https://github.com/user-attachments/assets/15044e81-a9f4-4408-8349-984a9722b3bd" />
+
 A tidal datum is a fixed vertical reference used to measure water
 levels. Different regions use different zero-points, so the same numeric
 tide height can represent different true sea levels unless a common
