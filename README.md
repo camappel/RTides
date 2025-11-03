@@ -14,26 +14,6 @@ library(lubridate)
         date, intersect, setdiff, union
 
 ## Data
-
-### [British Oceanographic Data Centre](https://www.bodc.ac.uk/data/hosted_data_systems/sea_level/uk_tide_gauge_network/) - UK Tide Gauge Network
-
-| Field           | Value              |
-|-----------------|--------------------|
-| Station name    | Portsmouth         |
-| Location        | UK                 |
-| Latitude        | 50° 48’ N          |
-| Longitude       | 01° 06’ W          |
-| Datum reference | ACD = ODN − 2.73 m |
-| Time reference  | GMT                |
-| Resolution      | 15-minutes         |
-| Units           | Metric (m)         |
-
-*Variables*
-
-- ASLVBG02 (Observed surface elevation from bubbler gauge relative to
-  ACD)
-- Residual = Observed − Predicted (provided directly)
-
 ### [NOAA](https://tidesandcurrents.noaa.gov/) Tides & Currents
 
 | Field | Value |
@@ -54,17 +34,34 @@ library(lubridate)
 
 <img width="602" height="453" alt="Screenshot 2025-11-03 at 23 27 34" src="https://github.com/user-attachments/assets/15044e81-a9f4-4408-8349-984a9722b3bd" />
 
-The NOAA station uses Mean Lower-Low Water (MLLW) as its zero:
-
+A tidal datum is a fixed vertical reference used to measure water levels. Different regions use different zero-points:
+- The NOAA station uses Mean Lower-Low Water (MLLW) as its zero:
 - Mean Lower Low Water (MSSL) = "The average of the lower low water height of each tidal day observed over the National Tidal Datum Epoch"
 - Mean Sea Level (MSL) = "The arithmetic mean of hourly heights observed over the National Tidal Datum Epoch."
   - MLLW = MSL - 1.06 m @ Southbank Riverwalk
 - National Tidal Datum Epoch = "The specific 19-year period adopted by the National Ocean Service as the official time segment over which tide observations are taken and reduced to obtain mean values (e.g., mean lower low water, etc.) for tidal datums. It is necessary for standardization because of periodic and apparent secular trends in sea level. The present NTDE is 1983 through 2001 and is actively considered for revision every 20-25 years."
 
-A tidal datum is a fixed vertical reference used to measure water
-levels. Different regions use different zero-points, so the same numeric
-tide height can represent different true sea levels unless a common
-baseline is used.
+### [British Oceanographic Data Centre](https://www.bodc.ac.uk/data/hosted_data_systems/sea_level/uk_tide_gauge_network/) - UK Tide Gauge Network
+
+| Field           | Value              |
+|-----------------|--------------------|
+| Station name    | Portsmouth         |
+| Location        | UK                 |
+| Latitude        | 50° 48’ N          |
+| Longitude       | 01° 06’ W          |
+| Datum reference | ACD = ODN − 2.73 m |
+| Time reference  | GMT                |
+| Resolution      | 15-minutes         |
+| Units           | Metric (m)         |
+
+*Variables*
+
+- ASLVBG02 (Observed surface elevation from bubbler gauge relative to
+  ACD)
+- Residual = Observed − Predicted (provided directly)
+
+
+
 
 - The Portsmouth dataset uses Admiralty Chart Datum (ACD), which is
   approximately the Lowest Astronomical Tide and is 2.73 m below the UK
