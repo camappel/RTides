@@ -51,16 +51,13 @@ The NOAA station uses Mean Lower-Low Water (MLLW) as its zero:
 | Time reference  | GMT                |
 | Resolution      | 15-minutes         |
 | Units           | Metric (m)         |
-| ASLVBG02        | Observed surface elevation from bubbler gauge relative to
-  ACD |
-| Residual        | Observed − Predicted
+| ASLVBG02        | Observed surface elevation from bubbler gauge relative to ACD |
+| Residual        | Observed − Predicted |
 
 <img width="721" height="386" alt="image" src="https://github.com/user-attachments/assets/e4653ba1-13f2-4f37-8c04-9ae130084201" />
 
-
-- The Portsmouth dataset uses Admiralty Chart Datum (ACD), which is
-  approximately the Lowest Astronomical Tide and is 2.73 m below the UK
-  national height reference ODN (≈ mean sea level).
+- The UK national levelling network expresses heights in terms of ODN = average level of the sea at Newlyn (southwest England) 1915–21
+- The Portsmouth dataset uses Admiralty Chart Datum (ACD), which is 2.73 m below the UK national height reference ODN.
 
 
 ## Load data
