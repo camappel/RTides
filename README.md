@@ -13,31 +13,11 @@ library(lubridate)
 
         date, intersect, setdiff, union
 
+``` r
+library(ggplot2)
+```
+
 ## Data
-### [NOAA](https://tidesandcurrents.noaa.gov/) Tides & Currents
-
-| Field | Value |
-|----|----|
-| Station name | Southbank Riverwalk, St Johns River (8720226) |
-| Location | Jacksonville, FL, USA |
-| Latitude | 30° 19.2’ N |
-| Longitude | 81° 39.5’ W |
-| Datum reference | [MLLW = MSL - 1.06 m]((https://tidesandcurrents.noaa.gov/datums.html?id=8720226)) |
-| Time reference | EST |
-| Resolution | 6-minutes |
-| Units | “Standard” (f) or Metric (m) |
-| Predicted tide | [Harmonic](https://tidesandcurrents.noaa.gov/education/tech-assist/training/user-guides/assets/pdfs/Tide_Predictions_User_Guide_v4.pdf) |
-| Verified (observed) tide | preliminary: not quality controlled available up to todays date; **verified: quality controlled – month to year behind)** |
-
-<img width="602" height="453" alt="Screenshot 2025-11-03 at 23 27 34" src="https://github.com/user-attachments/assets/15044e81-a9f4-4408-8349-984a9722b3bd" />
-
-A tidal datum can be thought of as an imaginary fixed plane, or benchmark, relative to which we measure depths. Different regions and datasets use different datums.
-
-The NOAA station uses Mean Lower-Low Water (MLLW) as its zero:
-- Mean Lower Low Water (MLLW) = "The average of the lower low water height of each tidal day observed over the National Tidal Datum Epoch"
-- Mean Sea Level (MSL) = "The arithmetic mean of hourly heights observed over the National Tidal Datum Epoch."
-- MLLW = MSL - 1.06 m @ Southbank Riverwalk
-- National Tidal Datum Epoch = "The specific 19-year period adopted by the National Ocean Service as the official time segment over which tide observations are taken and reduced to obtain mean values (e.g., mean lower low water, etc.) for tidal datums. It is necessary for standardization because of periodic and apparent secular trends in sea level. The present NTDE is 1983 through 2001 and is actively considered for revision every 20-25 years."
 
 ### [British Oceanographic Data Centre](https://www.bodc.ac.uk/data/hosted_data_systems/sea_level/uk_tide_gauge_network/) - UK Tide Gauge Network
 
@@ -51,16 +31,44 @@ The NOAA station uses Mean Lower-Low Water (MLLW) as its zero:
 | Time reference  | GMT                |
 | Resolution      | 15-minutes         |
 | Units           | Metric (m)         |
-| ASLVBG02        | Observed surface elevation from bubbler gauge relative to ACD |
-| Residual        | The measured height minus the predicted height. The predicted values are derived from a database of tidal constants maintained by the National Oceanography Centre Application Group. All values are relative to Admiralty Chart Datum (ACD) |
-| Surges          | Extreme surges are the maximum and minimum tidal residuals | 
 
-<img width="721" height="386" alt="image" src="https://github.com/user-attachments/assets/e4653ba1-13f2-4f37-8c04-9ae130084201" />
+*Variables*
 
-- The UK national levelling network expresses heights in terms of ODN = average level of the sea at Newlyn (southwest England) 1915–21.
-- Most published tide tables in Great Britain use the [Admiralty Chart Datum (ACD)](https://ntslf.org/tides/datum), which is the lowest level due to astronomical effects and excluding meteorological effects below the UK national height reference ODN.
-- In Portsmouth, this is 2.73m below the ODN.
+- ASLVBG02 (Observed surface elevation from bubbler gauge relative to
+  ACD)
+- Residual = Observed − Predicted (provided directly)
 
+### [NOAA](https://tidesandcurrents.noaa.gov/) Tides & Currents
+
+| Field | Value |
+|----|----|
+| Station name | Southbank Riverwalk, St Johns River (8720226) |
+| Location | Jacksonville, FL, USA |
+| Latitude | 30° 19.2’ N |
+| Longitude | 81° 39.5’ W |
+| Datum reference | [MLLW = MSL - 1.06 m]((https://tidesandcurrents.noaa.gov/datums.html?id=8720226)) |
+| Time reference | EST |
+| Resolution | 6-minutes |
+| Units | “Standard” (f) or Metric (m) |
+
+*Variables*
+
+- Predicted tide
+- Verified (observed) tide
+
+A tidal datum is a fixed vertical reference used to measure water
+levels. Different regions use different zero-points, so the same numeric
+tide height can represent different true sea levels unless a common
+baseline is used.
+
+- The Portsmouth dataset uses Admiralty Chart Datum (ACD), which is
+  approximately the Lowest Astronomical Tide and is 2.73 m below the UK
+  national height reference ODN (≈ mean sea level).
+- The NOAA station uses Mean Lower-Low Water (MLLW) as its zero, with
+  Mean Sea Level (MSL) at this location being 1.06 m above MLLW.
+
+To make the two records directly comparable, both time series should be
+transformed to a common vertical datum, typically Mean Sea Level (MSL).
 
 ## Load data
 
@@ -68,46 +76,6 @@ The raw data files for Portsmouth and Jacksonville are stored in
 `data/`.
 
 ``` r
-# Read CSV (expected columns: date, time, elevation)
-portsmouth_raw <- read.csv("data/Portsmouth.csv", stringsAsFactors = FALSE)
-fl_raw <- read.csv("data/Florida.csv", stringsAsFactors = FALSE)
-
-# Build POSIXct timestamps (minute resolution) and convert elevation to MSL
-portsmouth_time <- as.POSIXct(
-  paste(portsmouth_raw$date, portsmouth_raw$time),
-  format = "%Y-%m-%d %H:%M",
-  tz = "UTC"
-)
-portsmouth_elev_msl <- as.numeric(portsmouth_raw$elevation) - 2.73
-```
-
-    Warning: NAs introduced by coercion
-
-``` r
-portsmouth_msl <- data.frame(time = portsmouth_time, elevation = portsmouth_elev_msl)
-
-fl_time <- as.POSIXct(
-  paste(fl_raw$date, fl_raw$time),
-  format = "%Y-%m-%d %H:%M",
-  tz = "UTC"
-)
-fl_elev_msl <- as.numeric(fl_raw$elevation) - 1.06
-fl_msl <- data.frame(time = fl_time, elevation = fl_elev_msl)
-
-# plot 2023 data only
-plot(portsmouth_msl$time[year(portsmouth_msl$time) == 2023], portsmouth_msl$elevation[year(portsmouth_msl$time) == 2023], type = "l", xlab = "Time", ylab = "Elevation (m)", main = "Portsmouth Tides")
-```
-
-![](README_files/figure-commonmark/unnamed-chunk-2-1.png)
-
-``` r
-plot(fl_msl$time, fl_msl$elevation, type = "l", xlab = "Time", ylab = "Elevation (m)", main = "Jacksonville Tides")
-```
-
-![](README_files/figure-commonmark/unnamed-chunk-2-2.png)
-
-``` r
-# https://api.tidesandcurrents.noaa.gov/api/prod/
 library(httr)
 
 base <- "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter"
@@ -120,24 +88,98 @@ params <- list(
   time_zone  = "gmt",
   units      = "metric",
   format     = "csv",
-  application= "RTides" # This parameter provides an “identifier” in automated activity / error logs that allows us to identify your query from others.
+  application= "RTides"
 )
 
 resp <- GET(base, query = params)
-
+# JSON -> R list
 data <- content(resp, "text", encoding = "UTF-8")
 data <- read.csv(text = data, stringsAsFactors = FALSE)
-print(head(data))
+# Print first and last 5 rows in one table
+library(knitr)
+n <- 5
+nrows <- nrow(data)
+if (nrows <= 2 * n) {
+  show_data <- data
+} else {
+  show_data <- rbind(
+    head(data, n),
+    setNames(rep(list(rep("...")), ncol(data)), names(data)),
+    tail(data, n)
+  )
+}
+kable(show_data)
 ```
 
-             Date.Time Water.Level Sigma I L
-    1 2023-01-01 00:00       0.569 0.004 0 0
-    2 2023-01-01 01:00       0.411 0.005 0 0
-    3 2023-01-01 02:00       0.244 0.004 0 0
-    4 2023-01-01 03:00       0.118 0.003 0 0
-    5 2023-01-01 04:00       0.059 0.002 0 0
-    6 2023-01-01 05:00       0.054 0.003 0 0
+|      | Date.Time        | Water.Level | Sigma | I   | L   |
+|:-----|:-----------------|:------------|:------|:----|:----|
+| 1    | 2023-01-01 00:00 | 0.569       | 0.004 | 0   | 0   |
+| 2    | 2023-01-01 01:00 | 0.411       | 0.005 | 0   | 0   |
+| 3    | 2023-01-01 02:00 | 0.244       | 0.004 | 0   | 0   |
+| 4    | 2023-01-01 03:00 | 0.118       | 0.003 | 0   | 0   |
+| 5    | 2023-01-01 04:00 | 0.059       | 0.002 | 0   | 0   |
+| 6    | …                | …           | …     | …   | …   |
+| 8756 | 2023-12-31 19:00 | 0.589       | 0.004 | 0   | 0   |
+| 8757 | 2023-12-31 20:00 | 0.505       | 0.005 | 0   | 0   |
+| 8758 | 2023-12-31 21:00 | 0.355       | 0.005 | 0   | 0   |
+| 8759 | 2023-12-31 22:00 | 0.197       | 0.007 | 0   | 0   |
+| 8760 | 2023-12-31 23:00 | 0.091       | 0.004 | 0   | 0   |
 
 ``` r
-library(ggplot2)
+fl_time <- as.POSIXct(data$Date.Time, tz = "UTC")
+fl <- data.frame(time = fl_time, elevation = as.numeric(data$Water.Level))
+# visualise first 24 hours of Jacksonville water level
+ggplot(fl[fl$time >= "2023-01-01 00:00:00" & fl$time <= "2023-01-01 23:59:59", ], aes(x = time, y = elevation)) +
+  geom_line(color = "steelblue") +
+  labs(
+    title = "Jacksonville Water Level — 2023",
+    x = "Time",
+    y = "Water Level (m, MLLW datum)"
+  ) +
+  theme_minimal()
 ```
+
+![](README_files/figure-commonmark/unnamed-chunk-3-1.png)
+
+``` r
+ggplot(fl, aes(x = time, y = elevation)) +
+  geom_line(color = "steelblue") +
+  labs(
+    title = "Jacksonville Water Level — 2023",
+    x = "Time",
+    y = "Water Level (m, MLLW datum)"
+  ) +
+  theme_minimal()
+```
+
+![](README_files/figure-commonmark/unnamed-chunk-3-2.png)
+
+``` r
+# Read CSV (expected columns: date, time, elevation)
+portsmouth_raw <- read.csv("data/Portsmouth.csv", stringsAsFactors = FALSE)
+portsmouth_raw <- portsmouth_raw[portsmouth_raw$date >= "2023-01-01" & portsmouth_raw$date <= "2023-12-31", ]
+
+# Build POSIXct timestamps (minute resolution) 
+portsmouth_time <- as.POSIXct(
+  paste(portsmouth_raw$date, portsmouth_raw$time),
+  tz = "UTC"
+)
+# filter for 2023
+portsmouth_msl <- data.frame(time = portsmouth_time, elevation = as.numeric(portsmouth_raw$elevation))
+```
+
+    Warning in data.frame(time = portsmouth_time, elevation =
+    as.numeric(portsmouth_raw$elevation)): NAs introduced by coercion
+
+``` r
+ggplot(portsmouth_msl, aes(x = time, y = elevation)) +
+  geom_line(color = "steelblue") +
+  labs(
+    title = "Portsmouth Water Level — 2023",
+    x = "Time",
+    y = "Water Level (m, MSL datum)"
+  ) +
+  theme_minimal()
+```
+
+![](README_files/figure-commonmark/unnamed-chunk-4-1.png)
