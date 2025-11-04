@@ -57,7 +57,8 @@ The NOAA station uses Mean Lower-Low Water (MLLW) as its zero:
 <img width="721" height="386" alt="image" src="https://github.com/user-attachments/assets/e4653ba1-13f2-4f37-8c04-9ae130084201" />
 
 - The UK national levelling network expresses heights in terms of ODN = average level of the sea at Newlyn (southwest England) 1915–21
-- The Portsmouth dataset uses Admiralty Chart Datum (ACD), which is 2.73 m below the UK national height reference ODN.
+- Most published tide tables in Great Britain use the [Admiralty Chart Datum (ACD)](https://ntslf.org/tides/datum), which is the lowest level due to astronomical effects and excluding meteorological effects below the UK national height reference ODN.
+- In Portsmouth, this is 2.73m below the ODN.
 
 
 ## Load data
