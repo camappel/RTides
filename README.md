@@ -27,7 +27,7 @@ library(lubridate)
 | Resolution | 6-minutes |
 | Units | “Standard” (f) or Metric (m) |
 | Predicted tide | [Harmonic](https://tidesandcurrents.noaa.gov/education/tech-assist/training/user-guides/assets/pdfs/Tide_Predictions_User_Guide_v4.pdf) |
-| Verified (observed) tide | fast: not quality controlled available up to todays date; **delayed/research: quality controlled – month to year behind)** |
+| Verified (observed) tide | preliminary: not quality controlled available up to todays date; **verified: quality controlled – month to year behind)** |
 
 <img width="602" height="453" alt="Screenshot 2025-11-03 at 23 27 34" src="https://github.com/user-attachments/assets/15044e81-a9f4-4408-8349-984a9722b3bd" />
 
