@@ -139,13 +139,38 @@ kable(show_data)
 ``` r
 fl_time <- as.POSIXct(data$Date.Time, tz = "UTC")
 fl <- data.frame(time = fl_time, elevation = as.numeric(data$Water.Level))
-# visualise first 24 hours of Jacksonville water level
-ggplot(fl[fl$time >= "2023-01-01 00:00:00" & fl$time <= "2023-01-01 23:59:59", ], aes(x = time, y = elevation)) +
-  geom_line(color = "steelblue") +
+
+# Plot a week of tide curves (first 7 days) on the same chart, color by day
+library(dplyr)
+```
+
+
+    Attaching package: 'dplyr'
+
+    The following objects are masked from 'package:stats':
+
+        filter, lag
+
+    The following objects are masked from 'package:base':
+
+        intersect, setdiff, setequal, union
+
+``` r
+library(lubridate)
+library(ggplot2)
+
+fl_week <- fl %>%
+  filter(time >= as.POSIXct("2023-01-01 00:00:00", tz = "UTC") &
+         time < as.POSIXct("2023-01-8 00:00:00", tz = "UTC")) %>%
+  mutate(day = as.Date(time))
+
+ggplot(fl_week, aes(x = format(time, "%H:%M"), y = elevation, color = factor(day), group = day)) +
+  geom_line() +
   labs(
-    title = "Jacksonville Water Level — 2023",
-    x = "Time",
-    y = "Water Level (m, MLLW datum)"
+    title = "Jacksonville Water Level — First Week of 2023",
+    x = "Hour of Day",
+    y = "Water Level (m, MLLW datum)",
+    color = "Date"
   ) +
   theme_minimal()
 ```
@@ -163,7 +188,7 @@ ggplot(fl, aes(x = time, y = elevation)) +
   theme_minimal()
 ```
 
-![](README_files/figure-commonmark/unnamed-chunk-3-2.png)
+![](README_files/figure-commonmark/unnamed-chunk-4-1.png)
 
 ``` r
 # Read CSV (expected columns: date, time, elevation)
@@ -193,7 +218,7 @@ ggplot(portsmouth_msl[portsmouth_msl$time >= "2023-01-01 00:00:00" & portsmouth_
   theme_minimal()
 ```
 
-![](README_files/figure-commonmark/unnamed-chunk-4-1.png)
+![](README_files/figure-commonmark/unnamed-chunk-5-1.png)
 
 ``` r
 ggplot(portsmouth_msl, aes(x = time, y = elevation)) +
@@ -206,4 +231,4 @@ ggplot(portsmouth_msl, aes(x = time, y = elevation)) +
   theme_minimal()
 ```
 
-![](README_files/figure-commonmark/unnamed-chunk-4-2.png)
+![](README_files/figure-commonmark/unnamed-chunk-5-2.png)
