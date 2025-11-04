@@ -107,6 +107,7 @@ plot(fl_msl$time, fl_msl$elevation, type = "l", xlab = "Time", ylab = "Elevation
 ![](README_files/figure-commonmark/unnamed-chunk-2-2.png)
 
 ``` r
+# https://api.tidesandcurrents.noaa.gov/api/prod/
 library(httr)
 
 base <- "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter"
@@ -119,11 +120,11 @@ params <- list(
   time_zone  = "gmt",
   units      = "metric",
   format     = "csv",
-  application= "RTides"
+  application= "RTides" # This parameter provides an “identifier” in automated activity / error logs that allows us to identify your query from others.
 )
 
 resp <- GET(base, query = params)
-# JSON -> R list
+
 data <- content(resp, "text", encoding = "UTF-8")
 data <- read.csv(text = data, stringsAsFactors = FALSE)
 print(head(data))
