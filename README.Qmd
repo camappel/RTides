@@ -124,8 +124,18 @@ portsmouth_time <- as.POSIXct(
   paste(portsmouth_raw$date, portsmouth_raw$time),
   tz = "UTC"
 )
-# filter for 2023
 portsmouth_msl <- data.frame(time = portsmouth_time, elevation = as.numeric(portsmouth_raw$elevation))
+
+# visualise first 24 hours of Portsmouth water level
+ggplot(portsmouth_msl[portsmouth_msl$time >= "2023-01-01 00:00:00" & portsmouth_msl$time <= "2023-01-01 23:59:59", ], aes(x = time, y = elevation)) +
+  geom_line(color = "steelblue") +
+  labs(
+    title = "Portsmouth Water Level — 2023",
+    x = "Time",
+    y = "Water Level (m, MSL datum)"
+  ) +
+  theme_minimal()
+
 ggplot(portsmouth_msl, aes(x = time, y = elevation)) +
   geom_line(color = "steelblue") +
   labs(
