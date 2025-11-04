@@ -52,11 +52,12 @@ The NOAA station uses Mean Lower-Low Water (MLLW) as its zero:
 | Resolution      | 15-minutes         |
 | Units           | Metric (m)         |
 | ASLVBG02        | Observed surface elevation from bubbler gauge relative to ACD |
-| Residual        | Observed − Predicted |
+| Residual        | The measured height minus the predicted height). The predicted values are derived from a database of tidal constants maintained by the National Oceanography Centre Application Group. All values are relative to Admiralty Chart Datum (ACD) |
+| Surges          | Extreme surges are the maximum and minimum tidal residuals | 
 
 <img width="721" height="386" alt="image" src="https://github.com/user-attachments/assets/e4653ba1-13f2-4f37-8c04-9ae130084201" />
 
-- The UK national levelling network expresses heights in terms of ODN = average level of the sea at Newlyn (southwest England) 1915–21
+- The UK national levelling network expresses heights in terms of ODN = average level of the sea at Newlyn (southwest England) 1915–21.
 - Most published tide tables in Great Britain use the [Admiralty Chart Datum (ACD)](https://ntslf.org/tides/datum), which is the lowest level due to astronomical effects and excluding meteorological effects below the UK national height reference ODN.
 - In Portsmouth, this is 2.73m below the ODN.
 
