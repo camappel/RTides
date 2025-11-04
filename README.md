@@ -172,7 +172,11 @@ ggplot(fl_week, aes(x = format(time, "%H:%M"), y = elevation, color = factor(day
     y = "Water Level (m, MLLW datum)",
     color = "Date"
   ) +
-  theme_minimal()
+  theme_minimal() +
+  theme(
+    legend.position = c(0.9, 0.8), # overlay legend inside plot area (x, y in npc)
+    legend.background = element_rect(fill = "white", color = "gray", linewidth = 0.5)
+  )
 ```
 
 ![](README_files/figure-commonmark/unnamed-chunk-3-1.png)
