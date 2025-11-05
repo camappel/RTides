@@ -29,7 +29,7 @@ library(ggplot2)
 | Location | Jacksonville, FL, USA |
 | Latitude | 30° 19.2’ N |
 | Longitude | 81° 39.5’ W |
-| Datum reference | [MLLW = MSL - 1.06 m]((https://tidesandcurrents.noaa.gov/datums.html?id=8720226)) |
+| Datum reference | [MLLW = MSL - 0.324m]((https://tidesandcurrents.noaa.gov/datums.html?id=8720226)) |
 | Time reference | EST |
 | Resolution | 6-minutes |
 | Units | “Standard” (f) or Metric (m) |
