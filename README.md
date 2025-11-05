@@ -42,18 +42,12 @@ A tidal datum can be thought of as an imaginary fixed plane, or
 benchmark, relative to which we measure depths. Different regions and
 datasets use different datums.
 
-The NOAA station uses Mean Lower-Low Water (MLLW) as its zero: - Mean
-Lower Low Water (MLLW) = “The average of the lower low water height of
-each tidal day observed over the National Tidal Datum Epoch” - Mean Sea
-Level (MSL) = “The arithmetic mean of hourly heights observed over the
-National Tidal Datum Epoch.” - MLLW = MSL - 1.06 m @ Southbank
-Riverwalk - National Tidal Datum Epoch = “The specific 19-year period
-adopted by the National Ocean Service as the official time segment over
-which tide observations are taken and reduced to obtain mean values
-(e.g., mean lower low water, etc.) for tidal datums. It is necessary for
-standardization because of periodic and apparent secular trends in sea
-level. The present NTDE is 1983 through 2001 and is actively considered
-for revision every 20-25 years.”
+The NOAA station uses Mean Lower-Low Water (MLLW) as its zero: 
+
+- Mean Lower Low Water (MLLW) = “The average of the lower low water height of each tidal day observed over the National Tidal Datum Epoch”
+- Mean Sea Level (MSL) = “The arithmetic mean of hourly heights observed over the National Tidal Datum Epoch.”
+- MLLW = MSL - 1.06 m @ Southbank Riverwalk
+- National Tidal Datum Epoch = “The specific 19-year period adopted by the National Ocean Service as the official time segment over which tide observations are taken and reduced to obtain mean values (e.g., mean lower low water, etc.) for tidal datums. It is necessary for standardization because of periodic and apparent secular trends in sea level. The present NTDE is 1983 through 2001 and is actively considered for revision every 20-25 years.”
 
 ### [British Oceanographic Data Centre](https://www.bodc.ac.uk/data/hosted_data_systems/sea_level/uk_tide_gauge_network/) - UK Tide Gauge Network
 
