@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>project_proposal</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="project_proposal_files/libs/clipboard/clipboard.min.js"></script>
+<script src="project_proposal_files/libs/quarto-html/quarto.js"></script>
+<script src="project_proposal_files/libs/quarto-html/popper.min.js"></script>
+<script src="project_proposal_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="project_proposal_files/libs/quarto-html/anchor.min.js"></script>
+<link href="project_proposal_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="project_proposal_files/libs/quarto-html/quarto-syntax-highlighting-01c78b5cd655e4cd89133cf59d535862.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="project_proposal_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="project_proposal_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="project_proposal_files/libs/bootstrap/bootstrap-e19dc0c07aeef78048e587c3f1edba7a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+<section id="extreme-sea-level-analysis" class="level1">
+<h1>Extreme Sea Level Analysis</h1>
+</section>
+<section id="methodology" class="level1">
+<h1>Methodology</h1>
+<p>The study will have three main components:</p>
+<ol type="1">
+<li>First a broad scale assessment will be carried out determining how both mean and extreme sea-levels have changed in the past in Venice, London and Netherlands, using tide gauge records, satellite observations and model re-analysis.</li>
+<li>Second, the student will use new AI approaches to improve forecasts of storm surges in these areas, developing early warning systems. Knowledge obtained during the initial assessment will be essential to select training data for AI.</li>
+<li>Finally, future changes in sea level and extremes will be assessed using a range of climate projections.</li>
+</ol>
+<p>A statistical method will be developed (building on existing work being carried out at the University of Southampton) to estimate how many more times the barriers will have to close each year and when in the year, in the future. Changes in weather predictability in a warming world will be assessed as part of this exercise. Today storm surge barriers typically close between 1 and 30 times per year, but with a sea level rise of 1 m, this might increase to &gt;100 closures per year. An assessment will thus be made of implications of increased closures on storm surge barrier management, maintenance and operation.</p>
+</section>
+<section id="data" class="level1">
+<h1>Data</h1>
+<section id="noaa-tides-currents" class="level2">
+<h2 class="anchored" data-anchor-id="noaa-tides-currents"><a href="https://tidesandcurrents.noaa.gov/">NOAA</a> Tides &amp; Currents</h2>
+<section id="jacksonville-fl-southbank-riverwalk-st-johns-river-8720226" class="level3">
+<h3 class="anchored" data-anchor-id="jacksonville-fl-southbank-riverwalk-st-johns-river-8720226">Jacksonville, FL: Southbank Riverwalk, St Johns River (8720226)</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Station name</td>
+<td>Southbank Riverwalk, St Johns River (8720226)</td>
+</tr>
+<tr class="even">
+<td>Location</td>
+<td>Jacksonville, FL, USA</td>
+</tr>
+<tr class="odd">
+<td>Latitude</td>
+<td>30° 19.2’ N</td>
+</tr>
+<tr class="even">
+<td>Longitude</td>
+<td>81° 39.5’ W</td>
+</tr>
+<tr class="odd">
+<td>Datum reference</td>
+<td><a href="(https://tidesandcurrents.noaa.gov/datums.html?id=8720226)">MLLW = MSL - 1.06 m</a></td>
+</tr>
+<tr class="even">
+<td>Time reference</td>
+<td>EST</td>
+</tr>
+<tr class="odd">
+<td>Resolution</td>
+<td>6-minutes</td>
+</tr>
+<tr class="even">
+<td>Units</td>
+<td>“Standard” (f) or Metric (m)</td>
+</tr>
+<tr class="odd">
+<td>Predicted tide</td>
+<td><a href="https://tidesandcurrents.noaa.gov/education/tech-assist/training/user-guides/assets/pdfs/Tide_Predictions_User_Guide_v4.pdf">Harmonic</a></td>
+</tr>
+<tr class="even">
+<td>Verified (observed) tide</td>
+<td>preliminary: not quality controlled available up to todays date; <strong>verified: quality controlled – month to year behind)</strong></td>
+</tr>
+</tbody>
+</table>
+<p><img width="602" height="453" alt="Screenshot 2025-11-03 at 23 27 34" src="https://github.com/user-attachments/assets/15044e81-a9f4-4408-8349-984a9722b3bd"></p>
+<p>A tidal datum can be thought of as an imaginary fixed plane, or benchmark, relative to which we measure depths. Different regions and datasets use different datums.</p>
+<p>The NOAA station uses Mean Lower-Low Water (MLLW) as its zero:</p>
+<ul>
+<li>Mean Lower Low Water (MLLW) = “The average of the lower low water height of each tidal day observed over the National Tidal Datum Epoch”</li>
+<li>Mean Sea Level (MSL) = “The arithmetic mean of hourly heights observed over the National Tidal Datum Epoch.”</li>
+<li>MLLW = MSL - 1.06 m @ Southbank Riverwalk</li>
+<li>National Tidal Datum Epoch = “The specific 19-year period adopted by the National Ocean Service as the official time segment over which tide observations are taken and reduced to obtain mean values (e.g., mean lower low water, etc.) for tidal datums. It is necessary for standardization because of periodic and apparent secular trends in sea level. The present NTDE is 1983 through 2001 and is actively considered for revision every 20-25 years.”</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(httr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>base <span class="ot">&lt;-</span> <span class="st">"https://api.tidesandcurrents.noaa.gov/api/prod/datagetter"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">begin_date =</span> <span class="st">"20230101"</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">end_date   =</span> <span class="st">"20231231"</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">station    =</span> <span class="st">"8720226"</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">product    =</span> <span class="st">"hourly_height"</span>,   <span class="co"># use 'water_level' for 6-min; then do month by month</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">datum      =</span> <span class="st">"MLLW"</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">time_zone  =</span> <span class="st">"gmt"</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">units      =</span> <span class="st">"metric"</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">format     =</span> <span class="st">"csv"</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">application=</span> <span class="st">"RTides"</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>resp <span class="ot">&lt;-</span> <span class="fu">GET</span>(base, <span class="at">query =</span> params)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># JSON -&gt; R list</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">content</span>(resp, <span class="st">"text"</span>, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">text =</span> data, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Print first and last 5 rows in one table</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>nrows <span class="ot">&lt;-</span> <span class="fu">nrow</span>(data)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (nrows <span class="sc">&lt;=</span> <span class="dv">2</span> <span class="sc">*</span> n) {</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  show_data <span class="ot">&lt;-</span> data</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  show_data <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">head</span>(data, n),</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">setNames</span>(<span class="fu">rep</span>(<span class="fu">list</span>(<span class="fu">rep</span>(<span class="st">"..."</span>)), <span class="fu">ncol</span>(data)), <span class="fu">names</span>(data)),</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tail</span>(data, n)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(show_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Date.Time</th>
+<th style="text-align: left;">Water.Level</th>
+<th style="text-align: left;">Sigma</th>
+<th style="text-align: left;">I</th>
+<th style="text-align: left;">L</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">2023-01-01 00:00</td>
+<td style="text-align: left;">0.569</td>
+<td style="text-align: left;">0.004</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">2023-01-01 01:00</td>
+<td style="text-align: left;">0.411</td>
+<td style="text-align: left;">0.005</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">2023-01-01 02:00</td>
+<td style="text-align: left;">0.244</td>
+<td style="text-align: left;">0.004</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">2023-01-01 03:00</td>
+<td style="text-align: left;">0.118</td>
+<td style="text-align: left;">0.003</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">2023-01-01 04:00</td>
+<td style="text-align: left;">0.059</td>
+<td style="text-align: left;">0.002</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">…</td>
+<td style="text-align: left;">…</td>
+<td style="text-align: left;">…</td>
+<td style="text-align: left;">…</td>
+<td style="text-align: left;">…</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">8756</td>
+<td style="text-align: left;">2023-12-31 19:00</td>
+<td style="text-align: left;">0.589</td>
+<td style="text-align: left;">0.004</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">8757</td>
+<td style="text-align: left;">2023-12-31 20:00</td>
+<td style="text-align: left;">0.505</td>
+<td style="text-align: left;">0.005</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">8758</td>
+<td style="text-align: left;">2023-12-31 21:00</td>
+<td style="text-align: left;">0.355</td>
+<td style="text-align: left;">0.005</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">8759</td>
+<td style="text-align: left;">2023-12-31 22:00</td>
+<td style="text-align: left;">0.197</td>
+<td style="text-align: left;">0.007</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">8760</td>
+<td style="text-align: left;">2023-12-31 23:00</td>
+<td style="text-align: left;">0.091</td>
+<td style="text-align: left;">0.004</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>fl_time <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(data<span class="sc">$</span>Date.Time, <span class="at">tz =</span> <span class="st">"UTC"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>fl <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">time =</span> fl_time, <span class="at">elevation =</span> <span class="fu">as.numeric</span>(data<span class="sc">$</span>Water.Level))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot a week of tide curves (first 7 days) on the same chart, color by day</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>fl_week <span class="ot">&lt;-</span> fl <span class="sc">%&gt;%</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(time <span class="sc">&gt;=</span> <span class="fu">as.POSIXct</span>(<span class="st">"2023-01-01 00:00:00"</span>, <span class="at">tz =</span> <span class="st">"UTC"</span>) <span class="sc">&amp;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>         time <span class="sc">&lt;</span> <span class="fu">as.POSIXct</span>(<span class="st">"2023-01-08 00:00:00"</span>, <span class="at">tz =</span> <span class="st">"UTC"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">day =</span> <span class="fu">as.Date</span>(time))</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(fl_week, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">format</span>(time, <span class="st">"%H:%M"</span>), <span class="at">y =</span> elevation, <span class="at">color =</span> <span class="fu">factor</span>(day), <span class="at">group =</span> day)) <span class="sc">+</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Jacksonville Water Level — First Week of 2023"</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Hour of Day"</span>,</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Water Level (m, MLLW datum)"</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="project_proposal_files/figure-commonmark/unnamed-chunk-3-1.png" class="img-fluid"></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(fl, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> elevation)) <span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Jacksonville Water Level — 2023"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Time"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Water Level (m, MLLW datum)"</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="project_proposal_files/figure-commonmark/unnamed-chunk-4-1.png" class="img-fluid"></p>
+</section>
+</section>
+<section id="gelsa-4.0-global-ensemble-sea-level-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="gelsa-4.0-global-ensemble-sea-level-analysis"><a href="https://www.gesla.org/gesla4.0/">GELSA 4.0</a> Global Ensemble Sea Level Analysis</h2>
+<section id="venezia-city-of-venice-tide-forecasts-and-reporting-center" class="level3">
+<h3 class="anchored" data-anchor-id="venezia-city-of-venice-tide-forecasts-and-reporting-center">Venezia: <a href="https://www.comune.venezia.it/node/6214">City of Venice, Tide Forecasts and Reporting Center</a></h3>
+<p>The largest flood in Venice since 1980 occurred on November 12, 2019, when the water level peaked at 187 cm (74 inches). This was the second-highest tide ever recorded in the city, only surpassed by the historic 194 cm flood of November 4, 1966.</p>
+<p>Other significant floods since 1980 include:</p>
+<ul>
+<li>October 29, 2018: Water levels reached 156 cm, flooding approximately 75% of the city.</li>
+<li>December 1, 2008: The tide also peaked at 156 cm.</li>
+<li>November 4, 2000: A flood of 144 cm, which covered 93% of the city in water.</li>
+<li>November 16, 2002: The water level reached 147 cm.</li>
+<li>February 1, 1986: A high tide of 158 cm.</li>
+</ul>
+<p>The November 2019 event prompted the mayor to declare a state of emergency due to hundreds of millions of dollars in damages. The increased frequency of such events, with four of the six times St.&nbsp;Mark’s Basilica has flooded in its 1,200-year history occurring in the last two decades, is largely attributed to climate change, rising sea levels, and the city’s natural subsidence.</p>
+<p>The MOSE project, a system of movable underwater barriers designed to protect the lagoon city from high tides, was developed in response to the increasing flood risk and began construction in 2003, with testing and completion in the years following the 2019 floods.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the GESLA4 data for Venice, skipping metadata/header (first 41 lines)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>venice_data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data/GESLA4_ALL/venezia-vene-ita-cv"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">skip =</span> <span class="dv">41</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">header =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Date"</span>, <span class="st">"Time"</span>, <span class="st">"SeaLevel"</span>, <span class="st">"SeaLevelQC"</span>, <span class="st">"UseInAnalysis"</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine Date and Time columns into a single POSIXct datetime column</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>venice_data <span class="ot">&lt;-</span> venice_data <span class="sc">%&gt;%</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">Datetime =</span> <span class="fu">ymd_hms</span>(<span class="fu">paste</span>(Date, Time), <span class="at">tz =</span> <span class="st">"UTC"</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Optional: Filter to only those rows flagged for use in analysis</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>venice_data <span class="ot">&lt;-</span> venice_data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(UseInAnalysis <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>venice_data <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>        Date     Time SeaLevel SeaLevelQC UseInAnalysis            Datetime
+1 1983/01/01 00:00:00     0.44          1             1 1983-01-01 00:00:00
+2 1983/01/01 01:00:00     0.35          1             1 1983-01-01 01:00:00
+3 1983/01/01 02:00:00     0.23          1             1 1983-01-01 02:00:00
+4 1983/01/01 03:00:00     0.10          1             1 1983-01-01 03:00:00
+5 1983/01/01 04:00:00     0.01          1             1 1983-01-01 04:00:00
+6 1983/01/01 05:00:00    -0.01          1             1 1983-01-01 05:00:00</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter to data between Nov 10, 2019 and Nov 16, 2019 (inclusive)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>venice_nov2019 <span class="ot">&lt;-</span> venice_data <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Datetime <span class="sc">&gt;=</span> <span class="fu">as.POSIXct</span>(<span class="st">"2019-11-10 00:00:00"</span>, <span class="at">tz =</span> <span class="st">"UTC"</span>) <span class="sc">&amp;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>         Datetime <span class="sc">&lt;=</span> <span class="fu">as.POSIXct</span>(<span class="st">"2019-11-16 23:59:59"</span>, <span class="at">tz =</span> <span class="st">"UTC"</span>))</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot SeaLevel over this period with horizontal flood lines</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(venice_nov2019, <span class="fu">aes</span>(<span class="at">x =</span> Datetime, <span class="at">y =</span> SeaLevel)) <span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.90</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span>      <span class="co"># 90cm: 1.84% submerged</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">1.20</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"orange"</span>) <span class="sc">+</span>   <span class="co"># 120cm: 28.75% submerged</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">1.50</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"purple"</span>) <span class="sc">+</span>   <span class="co"># 150cm: 62.98% submerged</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fu">min</span>(venice_nov2019<span class="sc">$</span>Datetime) <span class="sc">+</span> <span class="dv">86400</span>, <span class="at">y =</span> <span class="fl">0.92</span>, <span class="at">label =</span> <span class="st">"90cm (1.84%)"</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">hjust =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fu">min</span>(venice_nov2019<span class="sc">$</span>Datetime) <span class="sc">+</span> <span class="dv">86400</span>, <span class="at">y =</span> <span class="fl">1.22</span>, <span class="at">label =</span> <span class="st">"120cm (28.75%)"</span>, <span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">hjust =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fu">min</span>(venice_nov2019<span class="sc">$</span>Datetime) <span class="sc">+</span> <span class="dv">86400</span>, <span class="at">y =</span> <span class="fl">1.52</span>, <span class="at">label =</span> <span class="st">"150cm (62.98%)"</span>, <span class="at">color =</span> <span class="st">"purple"</span>, <span class="at">hjust =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Venice Sea Level: Nov 10-16, 2019"</span>,</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Date"</span>,</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Sea Level (m)"</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="project_proposal_files/figure-commonmark/unnamed-chunk-6-1.png" class="img-fluid"></p>
+</section>
+<section id="rotterdam-rijkswaterstaat" class="level3">
+<h3 class="anchored" data-anchor-id="rotterdam-rijkswaterstaat">Rotterdam: <a href="https://waterinfo.rws.nl/#!/nav/bulkdownload/alle-groepen/">Rijkswaterstaat</a></h3>
+<p>In order to test the barrier in actual stormy conditions, the water level threshold at which the computer system would start the closing procedure was lowered from 3.0 m over NAP to 2.6 m, for the duration of the 2007 storm season. On 8 November 2007, a storm from the northwest hit the Dutch coast. A storm surge, high enough to start the barrier’s closing procedure, occurred. The barrier was closed due to a storm surge for the first time since its construction.[7] As the Oosterscheldekering and Hartelkering storm surge barriers were also closed, the entire Dutch coast was protected against flooding for the first time since 1976. At 22:00 local time (CET), Dutch TV brought the news that maritime traffic on the Nieuwe Waterweg was shut off. The closing procedure of the Maeslantkering started at 23:10. The barrier was completely closed at 01:00 and was reopened on 9 November around 17:00.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the GESLA4 data for Rotterdam, skipping metadata/header (first 41 lines)</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>rotterdam_data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data/GESLA4_ALL/rotterdam-rottdm-nld-rws_hist"</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">skip =</span> <span class="dv">41</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">header =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Date"</span>, <span class="st">"Time"</span>, <span class="st">"SeaLevel"</span>, <span class="st">"SeaLevelQC"</span>, <span class="st">"UseInAnalysis"</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>rotterdam_data <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>        Date     Time SeaLevel SeaLevelQC UseInAnalysis
+1 1936/01/01 01:40:00    -0.24          0             1
+2 1936/01/01 04:40:00    -0.34          0             1
+3 1936/01/01 07:40:00     1.01          0             1
+4 1936/01/01 10:40:00     0.35          0             1
+5 1936/01/01 13:40:00    -0.57          0             1
+6 1936/01/01 16:40:00    -0.80          0             1</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter to data between Nov 5, 2007 and Nov 11, 2007 (inclusive)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>rotterdam_nov2007 <span class="ot">&lt;-</span> rotterdam_data <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Datetime =</span> <span class="fu">ymd_hms</span>(<span class="fu">paste</span>(Date, Time), <span class="at">tz =</span> <span class="st">"UTC"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Datetime <span class="sc">&gt;=</span> <span class="fu">as.POSIXct</span>(<span class="st">"2007-11-05 00:00:00"</span>, <span class="at">tz =</span> <span class="st">"UTC"</span>) <span class="sc">&amp;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>         Datetime <span class="sc">&lt;=</span> <span class="fu">as.POSIXct</span>(<span class="st">"2007-11-11 23:59:59"</span>, <span class="at">tz =</span> <span class="st">"UTC"</span>))</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Add vertical translucent banner for closed barrier (from 01:00 to 17:00 on Nov 9, 2007)</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>closed_start <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(<span class="st">"2007-11-09 01:00:00"</span>, <span class="at">tz =</span> <span class="st">"UTC"</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>closed_end   <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(<span class="st">"2007-11-09 17:00:00"</span>, <span class="at">tz =</span> <span class="st">"UTC"</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rotterdam_nov2007, <span class="fu">aes</span>(<span class="at">x =</span> Datetime, <span class="at">y =</span> SeaLevel)) <span class="sc">+</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"rect"</span>,</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">xmin =</span> closed_start,</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">xmax =</span> closed_end,</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymin =</span> <span class="sc">-</span><span class="cn">Inf</span>,</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymax =</span> <span class="cn">Inf</span>,</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"blue"</span>,</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.2</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"darkgreen"</span>) <span class="sc">+</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Rotterdam Sea Level: Nov 5-11, 2007"</span>,</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Date"</span>,</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Sea Level (m)"</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="project_proposal_files/figure-commonmark/unnamed-chunk-8-1.png" class="img-fluid"></p>
+</section>
+<section id="portsmouthbritish-oceanographic-data-centre" class="level3">
+<h3 class="anchored" data-anchor-id="portsmouthbritish-oceanographic-data-centre">Portsmouth:<a href="https://www.bodc.ac.uk/data/hosted_data_systems/sea_level/uk_tide_gauge_network/">British Oceanographic Data Centre</a></h3>
+<p>April 2024: A combination of high tides and strong winds led to the “highest ever recorded” tide in Portsmouth’s history. While parts of Old Portsmouth, Spice Island, and the Gunwharf area were deluged, the new coastal defences were credited with performing well and keeping the city safe from more severe damage.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the GESLA4 data for Portsmouth, skipping metadata/header (first 41 lines)</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>portsmouth_data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data/GESLA4_ALL/portsmouth-ptm-gbr-bodc"</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">skip =</span> <span class="dv">41</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">header =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Date"</span>, <span class="st">"Time"</span>, <span class="st">"SeaLevel"</span>, <span class="st">"SeaLevelQC"</span>, <span class="st">"UseInAnalysis"</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>portsmouth_data <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>        Date     Time SeaLevel SeaLevelQC UseInAnalysis
+1 1991/01/01 00:00:00 -99.9999          5             0
+2 1991/01/01 01:00:00 -99.9999          5             0
+3 1991/01/01 02:00:00 -99.9999          5             0
+4 1991/01/01 03:00:00 -99.9999          5             0
+5 1991/01/01 04:00:00 -99.9999          5             0
+6 1991/01/01 05:00:00 -99.9999          5             0</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter to data between April 6, 2024 and April 12, 2024 (inclusive)</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>portsmouth_april2024 <span class="ot">&lt;-</span> portsmouth_data <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Datetime =</span> <span class="fu">ymd_hms</span>(<span class="fu">paste</span>(Date, Time), <span class="at">tz =</span> <span class="st">"UTC"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Datetime <span class="sc">&gt;=</span> <span class="fu">as.POSIXct</span>(<span class="st">"2024-04-06 00:00:00"</span>, <span class="at">tz =</span> <span class="st">"UTC"</span>) <span class="sc">&amp;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>         Datetime <span class="sc">&lt;=</span> <span class="fu">as.POSIXct</span>(<span class="st">"2024-04-12 23:59:59"</span>, <span class="at">tz =</span> <span class="st">"UTC"</span>))</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(portsmouth_april2024, <span class="fu">aes</span>(<span class="at">x =</span> Datetime, <span class="at">y =</span> SeaLevel)) <span class="sc">+</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"midnightblue"</span>) <span class="sc">+</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Portsmouth Sea Level: April 6–12, 2024"</span>,</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Date"</span>,</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Sea Level (m)"</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="project_proposal_files/figure-commonmark/unnamed-chunk-10-1.png" class="img-fluid"></p>
+</section>
+</section>
+</section>
+<section id="harmonic-tidal-analysis" class="level1">
+<h1>Harmonic Tidal Analysis</h1>
+<p>Using harmonic analysis, we fit tidal constituents to observed sea levels and then predict future tides on a fixed time grid. For Portsmouth (BODC, GESLA4), we trained a harmonic model on the two years immediately prior to 2024‑04‑06 and produced a 7‑day forecast at 30‑minute intervals starting 2024‑04‑06. The workflow is implemented in <code>RTides/predict_portsmouth_2024_04_06.py</code>, with outputs saved as:</p>
+<ul>
+<li><code>RTides/portsmouth_2024-04-06_predictions.csv</code> (timestamp, predicted height in meters)</li>
+<li><code>RTides/portsmouth_2024-04-06_predictions.png</code> (time series plot)</li>
+</ul>
+<p>This approach leverages the <code>pytides</code> harmonic decomposition (<code>Tide.decompose</code>) on quality‑controlled GESLA observations (UseInAnalysis == 1), optionally downsampling high‑frequency data to stabilize and accelerate fitting, and then evaluates the fitted model at the desired forecast timestamps.</p>
+<p><img src="portsmouth_2024-04-06_predictions.png" class="img-fluid"></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Overlay observed (portsmouth_april2024) and predicted (CSV) for April 6–12, 2024</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"portsmouth_2024-04-06_predictions.csv"</span>, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>pred<span class="sc">$</span>Datetime <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(pred<span class="sc">$</span>datetime, <span class="at">tz =</span> <span class="st">"UTC"</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Align columns for plotting</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>pred_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">Datetime  =</span> pred<span class="sc">$</span>Datetime,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">SeaLevel  =</span> <span class="fu">as.numeric</span>(pred<span class="sc">$</span>prediction_m),</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">Source    =</span> <span class="st">"Predicted"</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>obs_df <span class="ot">&lt;-</span> portsmouth_april2024 <span class="sc">%&gt;%</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Datetime, SeaLevel) <span class="sc">%&gt;%</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Source =</span> <span class="st">"Observed"</span>)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>both <span class="ot">&lt;-</span> <span class="fu">rbind</span>(obs_df, pred_df)</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(both, <span class="fu">aes</span>(<span class="at">x =</span> Datetime, <span class="at">y =</span> SeaLevel, <span class="at">color =</span> Source)) <span class="sc">+</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Portsmouth: Observed vs Predicted Sea Level (2024-04-06 to 2024-04-12)"</span>,</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Date"</span>,</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Sea Level (m)"</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="project_proposal_files/figure-commonmark/unnamed-chunk-11-1.png" class="img-fluid"></p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

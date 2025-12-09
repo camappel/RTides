@@ -6,6 +6,7 @@ format: gfm
 library(magrittr)
 library(lubridate)
 library(ggplot2)
+library(dplyr)
 ```
 
 ## Data
@@ -108,7 +109,7 @@ library(ggplot2)
 
 fl_week <- fl %>%
   filter(time >= as.POSIXct("2023-01-01 00:00:00", tz = "UTC") &
-         time < as.POSIXct("2023-01-8 00:00:00", tz = "UTC")) %>%
+         time < as.POSIXct("2023-01-08 00:00:00", tz = "UTC")) %>%
   mutate(day = as.Date(time))
 
 ggplot(fl_week, aes(x = format(time, "%H:%M"), y = elevation, color = factor(day), group = day)) +
@@ -116,13 +117,11 @@ ggplot(fl_week, aes(x = format(time, "%H:%M"), y = elevation, color = factor(day
   labs(
     title = "Jacksonville Water Level — First Week of 2023",
     x = "Hour of Day",
-    y = "Water Level (m, MLLW datum)",
-    color = "Date"
+    y = "Water Level (m, MLLW datum)"
   ) +
   theme_minimal() +
   theme(
-    legend.position = c(0.9, 0.8), # overlay legend inside plot area (x, y in npc)
-    legend.background = element_rect(fill = "white", color = "gray", linewidth = 0.5)
+    legend.position = "none"
   )
 ```
 ```{r}
@@ -140,7 +139,6 @@ ggplot(fl, aes(x = time, y = elevation)) +
 ```{r}
 # Read CSV (expected columns: date, time, elevation)
 portsmouth_raw <- read.csv("data/Portsmouth.csv", stringsAsFactors = FALSE)
-portsmouth_raw <- portsmouth_raw[portsmouth_raw$date >= "2023-01-01" & portsmouth_raw$date <= "2023-12-31", ]
 
 # Build POSIXct timestamps (minute resolution) 
 portsmouth_time <- as.POSIXct(
@@ -149,15 +147,25 @@ portsmouth_time <- as.POSIXct(
 )
 portsmouth_msl <- data.frame(time = portsmouth_time, elevation = as.numeric(portsmouth_raw$elevation))
 
-# visualise first 24 hours of Portsmouth water level
-ggplot(portsmouth_msl[portsmouth_msl$time >= "2023-01-01 00:00:00" & portsmouth_msl$time <= "2023-01-01 23:59:59", ], aes(x = time, y = elevation)) +
-  geom_line(color = "steelblue") +
+# Filter for first 7 days of 2023 and add a 'day' column
+portsmouth_week <- portsmouth_msl %>%
+  filter(time >= as.POSIXct("2023-01-01 00:00:00", tz = "UTC") &
+         time < as.POSIXct("2023-01-08 00:00:00", tz = "UTC")) %>%
+  mutate(day = as.Date(time))
+
+ggplot(portsmouth_week, aes(x = time, y = elevation, color = factor(day), group = day)) +
+  geom_line() +
   labs(
-    title = "Portsmouth Water Level — 2023",
-    x = "Time",
-    y = "Water Level (m, MSL datum)"
+    title = "Portsmouth Water Level — First Week of 2023",
+    x = "Hour of Day",
+    y = "Water Level (m, ADC datum)"
   ) +
-  theme_minimal()
+  theme_minimal() +
+  theme(
+    legend.position = "none"
+  )
+```
+```{r}
 
 ggplot(portsmouth_msl, aes(x = time, y = elevation)) +
   geom_line(color = "steelblue") +
@@ -167,4 +175,86 @@ ggplot(portsmouth_msl, aes(x = time, y = elevation)) +
     y = "Water Level (m, MSL datum)"
   ) +
   theme_minimal()
+```
+
+### [British Oceanographic Data Centre](https://www.bodc.ac.uk/data/hosted_data_systems/sea_level/uk_tide_gauge_network/) - UK Tide Gauge Network
+
+| Field           | Value              |
+|-----------------|--------------------|
+| Station name    | Sheerness          |
+| Location        | UK                 |
+| Latitude        | 51° 27′ N          |
+| Longitude       | 0° 45   E          |
+| Time reference  | GMT                |
+| Resolution      | 15-minutes         |
+| Units           | Metric (m)         |
+| ASLVBG02        | Observed surface elevation from bubbler gauge relative to ACD |
+| Residual        | The measured height minus the predicted height. The predicted values are derived from a database of tidal constants maintained by the National Oceanography Centre Application Group. All values are relative to Admiralty Chart Datum (ACD) |
+| Surges          | Extreme surges are the maximum and minimum tidal residuals | 
+
+<img width="721" height="386" alt="image" src="https://github.com/user-attachments/assets/e4653ba1-13f2-4f37-8c04-9ae130084201" />
+
+- The UK national levelling network expresses heights in terms of ODN = average level of the sea at Newlyn (southwest England) 1915–21.
+- Most published tide tables in Great Britain use the [Admiralty Chart Datum (ACD)](https://ntslf.org/tides/datum), which is the lowest level due to astronomical effects and excluding meteorological effects below the UK national height reference ODN.
+- In Portsmouth, this is 2.73m below the ODN.
+
+## Load data
+
+```{r}
+sheerness_raw <- read.csv("data/Sheerness_13-14.csv", stringsAsFactors = FALSE)
+
+extreme_water_levels <- sheerness_raw %>%
+  group_by(date) %>%
+  slice_max(order_by = elevation, n = 1, with_ties = FALSE) %>%
+  ungroup() %>%
+  arrange(desc(elevation)) %>%
+  head(10) %>%
+  select(date, time, elevation, residual)
+
+extreme_water_levels %>%
+  mutate(date = as.Date(date, format = "%Y/%m/%d")) %>%
+  arrange(date)
+```
+
+```{r}
+sheerness_raw$predicted <- sheerness_raw$elevation - sheerness_raw$residual
+
+# Filter data for date range 2014-12-13 to 2014-12-17 (smoothing applied)
+sheerness_raw$datetime <- as.POSIXct(paste(sheerness_raw$date, sheerness_raw$time), format = "%Y/%m/%d %H:%M:%S", tz = "GMT")
+date_start <- as.POSIXct("2014-12-13", tz = "GMT")
+date_end <- as.POSIXct("2014-12-17 23:59:59", tz = "GMT")
+
+sheerness_period <- sheerness_raw %>%
+  filter(datetime >= date_start, datetime <= date_end)
+
+# Aggregate (average) observed and predicted water levels hourly
+sheerness_period$hour <- lubridate::floor_date(sheerness_period$datetime, unit = "hour")
+sheerness_hourly <- sheerness_period %>%
+  group_by(hour) %>%
+  summarise(
+    elevation = mean(elevation, na.rm = TRUE),
+    predicted = mean(predicted, na.rm = TRUE)
+  ) %>%
+  ungroup()
+
+# Print out the table (optional)
+print(sheerness_hourly)
+
+library(tidyr)
+sheerness_long <- sheerness_hourly %>%
+  pivot_longer(cols = c(elevation, predicted),
+               names_to = "type",
+               values_to = "value")
+
+# Plot with default widths (removing knitr and fig-width comments)
+ggplot(sheerness_long, aes(x = hour, y = value, color = type)) +
+  geom_line(size = 1) +
+  labs(
+    title = "Sheerness: Hourly-Averaged Observed vs Predicted Water Levels (2014-12-13 to 2014-12-17)",
+    x = "Datetime (GMT, hourly)",
+    y = "Water Level (m, ACD datum)",
+    color = "Legend"
+  ) +
+  theme_minimal()
+
 ```

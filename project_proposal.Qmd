@@ -1,0 +1,302 @@
+---
+title: "Extreme Sea Level Analysis"
+format: gfm
+---
+
+```{r, include=FALSE}
+library(magrittr)
+library(lubridate)
+library(ggplot2)
+library(dplyr)
+```
+
+# Methodology
+The study will have three main components:
+
+1. First a broad scale assessment will be carried out determining how both mean and extreme sea-levels have changed in the past in Venice, London and Netherlands, using tide gauge records, satellite observations and model re-analysis. 
+2. Second, the student will use new AI approaches to improve forecasts of storm surges in these areas, developing early warning systems. Knowledge obtained during the initial assessment will be essential to select training data for AI. 
+3. Finally, future changes in sea level and extremes will be assessed using a range of climate projections.
+
+A statistical method will be developed (building on existing work being carried out at the University of Southampton) to estimate how many more times the barriers will have to close each year and when in the year, in the future. Changes in weather predictability in a warming world will be assessed as part of this exercise. Today storm surge barriers typically close between 1 and 30 times per year, but with a sea level rise of 1 m, this might increase to >100 closures per year. An assessment will thus be made of implications of increased closures on storm surge barrier management, maintenance and operation.
+
+
+# Data
+
+## [NOAA](https://tidesandcurrents.noaa.gov/) Tides & Currents
+
+### Jacksonville, FL: Southbank Riverwalk, St Johns River (8720226)
+| Field | Value |
+|----|----|
+| Station name | Southbank Riverwalk, St Johns River (8720226) |
+| Location | Jacksonville, FL, USA |
+| Latitude | 30° 19.2’ N |
+| Longitude | 81° 39.5’ W |
+| Datum reference | [MLLW = MSL - 1.06 m]((https://tidesandcurrents.noaa.gov/datums.html?id=8720226)) |
+| Time reference | EST |
+| Resolution | 6-minutes |
+| Units | “Standard” (f) or Metric (m) |
+| Predicted tide | [Harmonic](https://tidesandcurrents.noaa.gov/education/tech-assist/training/user-guides/assets/pdfs/Tide_Predictions_User_Guide_v4.pdf) |
+| Verified (observed) tide | preliminary: not quality controlled available up to todays date; **verified: quality controlled – month to year behind)** |
+
+<img width="602" height="453" alt="Screenshot 2025-11-03 at 23 27 34" src="https://github.com/user-attachments/assets/15044e81-a9f4-4408-8349-984a9722b3bd" />
+
+A tidal datum can be thought of as an imaginary fixed plane, or benchmark, relative to which we measure depths. Different regions and datasets use different datums.
+
+The NOAA station uses Mean Lower-Low Water (MLLW) as its zero:
+
+- Mean Lower Low Water (MLLW) = "The average of the lower low water height of each tidal day observed over the National Tidal Datum Epoch"
+- Mean Sea Level (MSL) = "The arithmetic mean of hourly heights observed over the National Tidal Datum Epoch."
+- MLLW = MSL - 1.06 m @ Southbank Riverwalk
+- National Tidal Datum Epoch = "The specific 19-year period adopted by the National Ocean Service as the official time segment over which tide observations are taken and reduced to obtain mean values (e.g., mean lower low water, etc.) for tidal datums. It is necessary for standardization because of periodic and apparent secular trends in sea level. The present NTDE is 1983 through 2001 and is actively considered for revision every 20-25 years."
+
+```{r}
+library(httr)
+
+base <- "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter"
+params <- list(
+  begin_date = "20230101",
+  end_date   = "20231231",
+  station    = "8720226",
+  product    = "hourly_height",   # use 'water_level' for 6-min; then do month by month
+  datum      = "MLLW",
+  time_zone  = "gmt",
+  units      = "metric",
+  format     = "csv",
+  application= "RTides"
+)
+
+resp <- GET(base, query = params)
+# JSON -> R list
+data <- content(resp, "text", encoding = "UTF-8")
+data <- read.csv(text = data, stringsAsFactors = FALSE)
+# Print first and last 5 rows in one table
+library(knitr)
+n <- 5
+nrows <- nrow(data)
+if (nrows <= 2 * n) {
+  show_data <- data
+} else {
+  show_data <- rbind(
+    head(data, n),
+    setNames(rep(list(rep("...")), ncol(data)), names(data)),
+    tail(data, n)
+  )
+}
+kable(show_data)
+```
+
+```{r}
+fl_time <- as.POSIXct(data$Date.Time, tz = "UTC")
+fl <- data.frame(time = fl_time, elevation = as.numeric(data$Water.Level))
+
+# Plot a week of tide curves (first 7 days) on the same chart, color by day
+library(dplyr)
+library(lubridate)
+library(ggplot2)
+
+fl_week <- fl %>%
+  filter(time >= as.POSIXct("2023-01-01 00:00:00", tz = "UTC") &
+         time < as.POSIXct("2023-01-08 00:00:00", tz = "UTC")) %>%
+  mutate(day = as.Date(time))
+
+ggplot(fl_week, aes(x = format(time, "%H:%M"), y = elevation, color = factor(day), group = day)) +
+  geom_line() +
+  labs(
+    title = "Jacksonville Water Level — First Week of 2023",
+    x = "Hour of Day",
+    y = "Water Level (m, MLLW datum)"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none"
+  )
+```
+```{r}
+ggplot(fl, aes(x = time, y = elevation)) +
+  geom_line(color = "steelblue") +
+  labs(
+    title = "Jacksonville Water Level — 2023",
+    x = "Time",
+    y = "Water Level (m, MLLW datum)"
+  ) +
+  theme_minimal()
+```
+
+## [GELSA 4.0](https://www.gesla.org/gesla4.0/) Global Ensemble Sea Level Analysis
+
+### Venezia: [City of Venice, Tide Forecasts and Reporting Center](https://www.comune.venezia.it/node/6214)
+
+The largest flood in Venice since 1980 occurred on November 12, 2019, when the water level peaked at 187 cm (74 inches). This was the second-highest tide ever recorded in the city, only surpassed by the historic 194 cm flood of November 4, 1966. 
+
+Other significant floods since 1980 include:
+
+- October 29, 2018: Water levels reached 156 cm, flooding approximately 75% of the city.
+- December 1, 2008: The tide also peaked at 156 cm.
+- November 4, 2000: A flood of 144 cm, which covered 93% of the city in water.
+- November 16, 2002: The water level reached 147 cm.
+- February 1, 1986: A high tide of 158 cm. 
+
+The November 2019 event prompted the mayor to declare a state of emergency due to hundreds of millions of dollars in damages. The increased frequency of such events, with four of the six times St. Mark's Basilica has flooded in its 1,200-year history occurring in the last two decades, is largely attributed to climate change, rising sea levels, and the city's natural subsidence. 
+
+The MOSE project, a system of movable underwater barriers designed to protect the lagoon city from high tides, was developed in response to the increasing flood risk and began construction in 2003, with testing and completion in the years following the 2019 floods. 
+
+```{r}
+# Load the GESLA4 data for Venice, skipping metadata/header (first 41 lines)
+venice_data <- read.table(
+  "data/GESLA4_ALL/venezia-vene-ita-cv",
+  skip = 41,
+  header = FALSE,
+  col.names = c("Date", "Time", "SeaLevel", "SeaLevelQC", "UseInAnalysis")
+)
+
+# Combine Date and Time columns into a single POSIXct datetime column
+venice_data <- venice_data %>%
+  mutate(
+    Datetime = ymd_hms(paste(Date, Time), tz = "UTC")
+  )
+
+# Optional: Filter to only those rows flagged for use in analysis
+venice_data <- venice_data %>% filter(UseInAnalysis == 1)
+
+venice_data %>% head()
+```
+
+```{r}
+# Filter to data between Nov 10, 2019 and Nov 16, 2019 (inclusive)
+venice_nov2019 <- venice_data %>%
+  filter(Datetime >= as.POSIXct("2019-11-10 00:00:00", tz = "UTC") &
+         Datetime <= as.POSIXct("2019-11-16 23:59:59", tz = "UTC"))
+
+# Plot SeaLevel over this period with horizontal flood lines
+ggplot(venice_nov2019, aes(x = Datetime, y = SeaLevel)) +
+  geom_line(color = "steelblue") +
+  geom_hline(yintercept = 0.90, linetype = "dashed", color = "red") +      # 90cm: 1.84% submerged
+  geom_hline(yintercept = 1.20, linetype = "dashed", color = "orange") +   # 120cm: 28.75% submerged
+  geom_hline(yintercept = 1.50, linetype = "dashed", color = "purple") +   # 150cm: 62.98% submerged
+  annotate("text", x = min(venice_nov2019$Datetime) + 86400, y = 0.92, label = "90cm (1.84%)", color = "red", hjust = 0) +
+  annotate("text", x = min(venice_nov2019$Datetime) + 86400, y = 1.22, label = "120cm (28.75%)", color = "orange", hjust = 0) +
+  annotate("text", x = min(venice_nov2019$Datetime) + 86400, y = 1.52, label = "150cm (62.98%)", color = "purple", hjust = 0) +
+  labs(
+    title = "Venice Sea Level: Nov 10-16, 2019",
+    x = "Date",
+    y = "Sea Level (m)"
+  ) +
+  theme_minimal()
+```
+
+### Rotterdam: [Rijkswaterstaat](https://waterinfo.rws.nl/#!/nav/bulkdownload/alle-groepen/)
+
+In order to test the barrier in actual stormy conditions, the water level threshold at which the computer system would start the closing procedure was lowered from 3.0 m over NAP to 2.6 m, for the duration of the 2007 storm season. On 8 November 2007, a storm from the northwest hit the Dutch coast. A storm surge, high enough to start the barrier's closing procedure, occurred. The barrier was closed due to a storm surge for the first time since its construction.[7] As the Oosterscheldekering and Hartelkering storm surge barriers were also closed, the entire Dutch coast was protected against flooding for the first time since 1976. At 22:00 local time (CET), Dutch TV brought the news that maritime traffic on the Nieuwe Waterweg was shut off. The closing procedure of the Maeslantkering started at 23:10. The barrier was completely closed at 01:00 and was reopened on 9 November around 17:00.
+
+```{r}
+# Load the GESLA4 data for Rotterdam, skipping metadata/header (first 41 lines)
+rotterdam_data <- read.table(
+  "data/GESLA4_ALL/rotterdam-rottdm-nld-rws_hist",
+  skip = 41,
+  header = FALSE,
+  col.names = c("Date", "Time", "SeaLevel", "SeaLevelQC", "UseInAnalysis")
+)
+
+rotterdam_data %>% head()
+```
+
+```{r}
+# Filter to data between Nov 5, 2007 and Nov 11, 2007 (inclusive)
+rotterdam_nov2007 <- rotterdam_data %>%
+  mutate(Datetime = ymd_hms(paste(Date, Time), tz = "UTC")) %>%
+  filter(Datetime >= as.POSIXct("2007-11-05 00:00:00", tz = "UTC") &
+         Datetime <= as.POSIXct("2007-11-11 23:59:59", tz = "UTC"))
+
+# Add vertical translucent banner for closed barrier (from 01:00 to 17:00 on Nov 9, 2007)
+closed_start <- as.POSIXct("2007-11-09 01:00:00", tz = "UTC")
+closed_end   <- as.POSIXct("2007-11-09 17:00:00", tz = "UTC")
+
+ggplot(rotterdam_nov2007, aes(x = Datetime, y = SeaLevel)) +
+  annotate(
+    "rect",
+    xmin = closed_start,
+    xmax = closed_end,
+    ymin = -Inf,
+    ymax = Inf,
+    fill = "blue",
+    alpha = 0.2
+  ) +
+  geom_line(color = "darkgreen") +
+  labs(
+    title = "Rotterdam Sea Level: Nov 5-11, 2007",
+    x = "Date",
+    y = "Sea Level (m)"
+  ) +
+  theme_minimal()
+```
+
+### Portsmouth:[British Oceanographic Data Centre](https://www.bodc.ac.uk/data/hosted_data_systems/sea_level/uk_tide_gauge_network/)
+
+April 2024: A combination of high tides and strong winds led to the "highest ever recorded" tide in Portsmouth's history. While parts of Old Portsmouth, Spice Island, and the Gunwharf area were deluged, the new coastal defences were credited with performing well and keeping the city safe from more severe damage.
+
+```{r}
+# Load the GESLA4 data for Portsmouth, skipping metadata/header (first 41 lines)
+portsmouth_data <- read.table(
+  "data/GESLA4_ALL/portsmouth-ptm-gbr-bodc",
+  skip = 41,
+  header = FALSE,
+  col.names = c("Date", "Time", "SeaLevel", "SeaLevelQC", "UseInAnalysis")
+)
+
+portsmouth_data %>% head()
+```
+
+```{r}
+# Filter to data between April 6, 2024 and April 12, 2024 (inclusive)
+portsmouth_april2024 <- portsmouth_data %>%
+  mutate(Datetime = ymd_hms(paste(Date, Time), tz = "UTC")) %>%
+  filter(Datetime >= as.POSIXct("2024-04-06 00:00:00", tz = "UTC") &
+         Datetime <= as.POSIXct("2024-04-12 23:59:59", tz = "UTC"))
+
+ggplot(portsmouth_april2024, aes(x = Datetime, y = SeaLevel)) +
+  geom_line(color = "midnightblue") +
+  labs(
+    title = "Portsmouth Sea Level: April 6–12, 2024",
+    x = "Date",
+    y = "Sea Level (m)"
+  ) +
+  theme_minimal()
+```
+
+# Harmonic Tidal Analysis
+Using harmonic analysis, we fit tidal constituents to observed sea levels and then predict future tides on a fixed time grid. For Portsmouth (BODC, GESLA4), we trained a harmonic model on the two years immediately prior to 2024‑04‑06 and produced a 7‑day forecast at 30‑minute intervals starting 2024‑04‑06. The workflow is implemented in `RTides/predict_portsmouth_2024_04_06.py`, with outputs saved as:
+
+- `RTides/portsmouth_2024-04-06_predictions.csv` (timestamp, predicted height in meters)
+- `RTides/portsmouth_2024-04-06_predictions.png` (time series plot)
+
+This approach leverages the `pytides` harmonic decomposition (`Tide.decompose`) on quality‑controlled GESLA observations (UseInAnalysis == 1), optionally downsampling high‑frequency data to stabilize and accelerate fitting, and then evaluates the fitted model at the desired forecast timestamps.
+
+![](portsmouth_2024-04-06_predictions.png)
+
+```{r}
+# Overlay observed (portsmouth_april2024) and predicted (CSV) for April 6–12, 2024
+pred <- read.csv("portsmouth_2024-04-06_predictions.csv", stringsAsFactors = FALSE)
+pred$Datetime <- as.POSIXct(pred$datetime, tz = "UTC")
+
+# Align columns for plotting
+pred_df <- data.frame(
+  Datetime  = pred$Datetime,
+  SeaLevel  = as.numeric(pred$prediction_m),
+  Source    = "Predicted"
+)
+
+obs_df <- portsmouth_april2024 %>%
+  dplyr::select(Datetime, SeaLevel) %>%
+  dplyr::mutate(Source = "Observed")
+
+both <- rbind(obs_df, pred_df)
+
+ggplot(both, aes(x = Datetime, y = SeaLevel, color = Source)) +
+  geom_line() +
+  labs(
+    title = "Portsmouth: Observed vs Predicted Sea Level (2024-04-06 to 2024-04-12)",
+    x = "Date",
+    y = "Sea Level (m)"
+  ) +
+  theme_minimal()
+```
